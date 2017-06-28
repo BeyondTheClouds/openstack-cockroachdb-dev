@@ -1,0 +1,46 @@
+#Get physical nodes with Docker on it:
+python -m enos.enos up
+
+#Get Cockroach docker image:
+docker pull cockroachdb/cockroach:v1.0.2
+
+#Create the first node of the cluster:
+docker run -d --name=roach1 --hostname=roach1 -p 26257:26257 -p 8080:8080 -v "${PWD}/cockroach-data/roach1:/cockroach/cockroach-data" cockroachdb/cockroach:v1.0.2 start --insecure --advertise-host=roach1_private_ip
+
+#Add a node to a cluster:
+docker run -d --name=roach1 --hostname=roach1 -p 26257:26257 -p 8080:8080 -v "/tmp/cockroach-data/roach1:/cockroach/cockroach-data" cockroachdb/cockroach:v1.0.2 start --insecure --advertise-host=10.24.72.71 --join=10.24.72.70
+
+#Open the SQL cli:
+docker exec -it roach1 ./cockroach sql --insecure
+
+#Some useful stuff:
+docker ps -a
+docker logs roach1
+docker exec -it roach1 bash
+...
+
+115-
+12- 
+125-
+49-
+54-
+55 R255
+57 R255
+58-
+59-
+6-
+60 R255
+61 R255
+62-
+63-
+65 R255
+66X R255
+67 R255
+68-
+69-
+7-
+70-
+71-
+73 R255
+74-
+8-

@@ -1,0 +1,116 @@
+---
+- hosts: all
+  tasks:
+  - name: Install git and sudo 
+    apt:
+      name: "{{item}}"
+      update_cache: yes
+    with_items:
+      - git
+      - sudo
+    become: true
+
+  - name: Add user stack
+    user:
+      name: stack
+      shell: /bin/bash
+      home: /opt/stack
+      system: yes
+    become: true
+
+  - name: Add stack user to becomeers
+    lineinfile:
+      dest: /etc/becomeers.d/stack
+      line: "stack ALL=(ALL) NOPASSWD: ALL"    
+      create: yes
+    become: true
+
+  - name: Clone Devstack
+    git: 
+      repo: https://git.openstack.org/openstack-dev/devstack
+      dest: /devstack
+      force: yes 
+      depth: 1
+    become: true
+
+  - name: Giving /devstack to stack user
+    file:
+      path: /devstack
+      owner: stack
+      mode: 0744
+      recurse: yes
+    become: true
+
+  # - name: Patching devstack (host-ip)
+  #   shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
+  #   become: true    
+
+  - name: Getting CockroachDB binary
+    get_url:
+      dest: ~/cockroach-v1.0.2.linux-amd64.tgz
+      url: https://binaries.cockroachdb.com/cockroach-v1.0.2.linux-amd64.tgz    
+    
+  - name: Unzip CockroachDB binary
+    unarchive:
+      src: ~/cockroach-v1.0.2.linux-amd64.tgz
+      dest: ~/
+    
+  - name: Install CockroachDB
+    command: cp -i cockroach-v1.0.2.linux-amd64/cockroach /usr/local/bin
+    args:
+      chdir: /home/vagrant  
+      creates: /usr/local/bin/cockroach
+    become: true
+
+  - name: Checking if Cockroach is running
+    shell: ps -aux | grep "cockroach start"
+    register: cockroach_test
+   
+  - name: Start CockroachDB
+    command: cockroach start --host=localhost --insecure --background
+    args:
+      chdir: /opt/stack
+    become: true
+    become_user: stack
+    when: cockroach_test.stdout_lines[0].find("cockroach start") == -1
+
+  - name: Install CockroachDB sqlalchemy ORM
+    pip:
+      name: "{{item}}"
+    with_items:
+      - sqlalchemy
+      - cockroachdb
+    become: true
+ 
+  - name: Configure Devstack in local.conf
+    blockinfile:
+      path: /devstack/local.conf
+      block: |
+        [[local|localrc]]
+        ADMIN_PASSWORD=admin
+        DATABASE_PASSWORD=admin
+        RABBIT_PASSWORD=admin
+        SERVICE_PASSWORD=admin
+        HOST_IP=10.0.2.15
+        LIBVIRT_TYPE=qemu
+
+        disable_service tempest swift horizon
+        # -----
+        [[post-config|$KEYSTONE_CONF]]
+
+        [database]
+        connection = cockroachdb://root@localhost:26257
+      create: yes
+    become: true    
+
+  - name: Clear Devstack
+    command: /devstack/unstack.sh
+    become: true
+    become_user: stack
+
+  - name: Run Devstack
+    shell: /devstack/stack.sh &> /tmp/stack-logs
+    args:
+      executable: /bin/bash
+    become: true
+    become_user: stack
