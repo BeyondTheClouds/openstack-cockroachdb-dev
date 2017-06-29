@@ -93,12 +93,13 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
 
-        disable_service tempest swift horizon
- 
-#        [[post-config|$KEYSTONE_CONF]]
-#
-#        [database]
-#        connection = cockroachdb://root@localhost:26257
+        #disable_service tempest swift horizon c-api c-sch c-vol dstat etcd g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc 
+
+        [[post-config|$KEYSTONE_CONF]]
+
+        [database]
+        connection = cockroachdb://root@127.0.0.1:26257
+
       create: yes
     become: true    
     become_user: stack
