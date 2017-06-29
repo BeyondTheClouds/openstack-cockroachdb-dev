@@ -20,7 +20,7 @@
 
   - name: Add stack user to becomeers
     lineinfile:
-      dest: /etc/becomeers.d/stack
+      dest: /etc/sudoers.d/stack
       line: "stack ALL=(ALL) NOPASSWD: ALL"    
       create: yes
     become: true
@@ -41,9 +41,9 @@
       recurse: yes
     become: true
 
-  # - name: Patching devstack (host-ip)
-  #   shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
-  #   become: true    
+  - name: Patching devstack (host-ip)
+    shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
+    become: true    
 
   - name: Getting CockroachDB binary
     get_url:
@@ -63,8 +63,8 @@
     become: true
 
   - name: Checking if Cockroach is running
-    shell: ps -aux | grep "cockroach start"
-    register: cockroach_test
+    shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
+    register: cockroach_is_started
    
   - name: Start CockroachDB
     command: cockroach start --host=localhost --insecure --background
@@ -72,7 +72,7 @@
       chdir: /opt/stack
     become: true
     become_user: stack
-    when: cockroach_test.stdout_lines[0].find("cockroach start") == -1
+    when: not cockroach_is_started.stdout|int|bool 
 
   - name: Install CockroachDB sqlalchemy ORM
     pip:
@@ -91,20 +91,20 @@
         DATABASE_PASSWORD=admin
         RABBIT_PASSWORD=admin
         SERVICE_PASSWORD=admin
-        HOST_IP=10.0.2.15
         LIBVIRT_TYPE=qemu
 
         disable_service tempest swift horizon
-        # -----
-        [[post-config|$KEYSTONE_CONF]]
-
-        [database]
-        connection = cockroachdb://root@localhost:26257
+ 
+#        [[post-config|$KEYSTONE_CONF]]
+#
+#        [database]
+#        connection = cockroachdb://root@localhost:26257
       create: yes
     become: true    
+    become_user: stack
 
   - name: Clear Devstack
-    command: /devstack/unstack.sh
+    shell: /devstack/unstack.sh
     become: true
     become_user: stack
 

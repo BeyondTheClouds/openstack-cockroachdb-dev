@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","disabled":false,"guestpath":"/vagrant","hostpath":"/home/antoine/Documents/StageDiscovery/discovery-cockroach","__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
