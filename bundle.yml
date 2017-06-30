@@ -47,6 +47,7 @@
     shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
     become: true    
 
+  #NOTE(acarat): Cockroach doesn't support -T psql option
   - name: Patching devstack (psql)
     shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U$DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
     become: true
@@ -72,7 +73,7 @@
     shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
     register: cockroach_is_started
    
-  #NOTE: Go with 5432 port (pgsql default) because devstack doesn't let you specify a port
+  #NOTE(acarat): Go with 5432 port (pgsql default) because devstack doesn't let you specify a port
   - name: Start CockroachDB
     command: cockroach start --host=localhost --port=5432 --insecure --background
     args:
@@ -87,6 +88,7 @@
     with_items:
       - sqlalchemy
       - cockroachdb
+      - git+https://github.com/cara-puce/oslo.db/oslodb
     become: true
  
   - name: Configure Devstack in local.conf
