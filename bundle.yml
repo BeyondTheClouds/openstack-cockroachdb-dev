@@ -29,7 +29,9 @@
     git: 
       repo: https://git.openstack.org/openstack-dev/devstack
       dest: /devstack
+      version: stable/ocata
       force: yes 
+      update: no
       depth: 1
     become: true
 
@@ -44,6 +46,10 @@
   - name: Patching devstack (host-ip)
     shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
     become: true    
+
+  - name: Patching devstack (psql)
+    shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U$DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
+    become: true
 
   - name: Getting CockroachDB binary
     get_url:
@@ -66,8 +72,9 @@
     shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
     register: cockroach_is_started
    
+  #NOTE: Go with 5432 port (pgsql default) because devstack doesn't let you specify a port
   - name: Start CockroachDB
-    command: cockroach start --host=localhost --insecure --background
+    command: cockroach start --host=localhost --port=5432 --insecure --background
     args:
       chdir: /opt/stack
     become: true
@@ -93,12 +100,17 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
 
-        #disable_service tempest swift horizon c-api c-sch c-vol dstat etcd g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc 
+        DATABASE_HOST=127.0.0.1
+        DATABASE_USER=root
+
+        disable_service tempest swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
+        disable_service mysql
+        enable_service postgresql
 
         [[post-config|$KEYSTONE_CONF]]
 
         [database]
-        connection = cockroachdb://root@127.0.0.1:26257
+        connection = cockroachdb://root@127.0.0.1:5432
 
       create: yes
     become: true    
