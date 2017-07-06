@@ -1,0 +1,307 @@
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_PAPER = "fr_FR.UTF-8",
+	LC_ADDRESS = "fr_FR.UTF-8",
+	LC_MONETARY = "fr_FR.UTF-8",
+	LC_NUMERIC = "fr_FR.UTF-8",
+	LC_TELEPHONE = "fr_FR.UTF-8",
+	LC_IDENTIFICATION = "fr_FR.UTF-8",
+	LC_MEASUREMENT = "fr_FR.UTF-8",
+	LC_CTYPE = "fr_FR.UTF-8",
+	LC_TIME = "fr_FR.UTF-8",
+	LC_NAME = "fr_FR.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_US.UTF-8").
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "keystone" as user "root".
+psql:/vagrant/pgdump:19: ERROR:  syntax error at or near "comment"
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+^
+
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:/vagrant/pgdump:509: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:516: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:523: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:530: ERROR:  unknown function: nextval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:584: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:634: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:668: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:728: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:812: ERROR:  multiple primary keys for table "access_token" are not allowed
+psql:/vagrant/pgdump:820: ERROR:  multiple primary keys for table "assignment" are not allowed
+psql:/vagrant/pgdump:828: ERROR:  multiple primary keys for table "config_register" are not allowed
+psql:/vagrant/pgdump:836: ERROR:  multiple primary keys for table "consumer" are not allowed
+psql:/vagrant/pgdump:844: ERROR:  multiple primary keys for table "credential" are not allowed
+psql:/vagrant/pgdump:852: ERROR:  index "domain_id" contains unknown column "text"
+ALTER TABLE
+psql:/vagrant/pgdump:868: ERROR:  multiple primary keys for table "endpoint_group" are not allowed
+psql:/vagrant/pgdump:876: ERROR:  multiple primary keys for table "endpoint" are not allowed
+ALTER TABLE
+psql:/vagrant/pgdump:892: ERROR:  multiple primary keys for table "federated_user" are not allowed
+psql:/vagrant/pgdump:900: ERROR:  multiple primary keys for table "federation_protocol" are not allowed
+psql:/vagrant/pgdump:908: ERROR:  multiple primary keys for table "group" are not allowed
+psql:/vagrant/pgdump:916: ERROR:  multiple primary keys for table "id_mapping" are not allowed
+psql:/vagrant/pgdump:924: ERROR:  multiple primary keys for table "identity_provider" are not allowed
+psql:/vagrant/pgdump:932: ERROR:  multiple primary keys for table "idp_remote_ids" are not allowed
+psql:/vagrant/pgdump:940: ERROR:  multiple primary keys for table "implied_role" are not allowed
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:/vagrant/pgdump:996: ERROR:  multiple primary keys for table "local_user" are not allowed
+ALTER TABLE
+psql:/vagrant/pgdump:1012: ERROR:  multiple primary keys for table "mapping" are not allowed
+psql:/vagrant/pgdump:1020: ERROR:  multiple primary keys for table "migrate_version" are not allowed
+psql:/vagrant/pgdump:1028: ERROR:  multiple primary keys for table "nonlocal_user" are not allowed
+psql:/vagrant/pgdump:1036: ERROR:  multiple primary keys for table "password" are not allowed
+ALTER TABLE
+psql:/vagrant/pgdump:1052: ERROR:  multiple primary keys for table "policy_association" are not allowed
+psql:/vagrant/pgdump:1060: ERROR:  multiple primary keys for table "policy" are not allowed
+psql:/vagrant/pgdump:1068: ERROR:  multiple primary keys for table "project_endpoint_group" are not allowed
+psql:/vagrant/pgdump:1076: ERROR:  multiple primary keys for table "project_endpoint" are not allowed
+psql:/vagrant/pgdump:1084: ERROR:  multiple primary keys for table "project" are not allowed
+psql:/vagrant/pgdump:1092: ERROR:  multiple primary keys for table "region" are not allowed
+psql:/vagrant/pgdump:1100: ERROR:  multiple primary keys for table "request_token" are not allowed
+psql:/vagrant/pgdump:1108: ERROR:  multiple primary keys for table "revocation_event" are not allowed
+psql:/vagrant/pgdump:1116: ERROR:  multiple primary keys for table "role" are not allowed
+psql:/vagrant/pgdump:1124: ERROR:  multiple primary keys for table "sensitive_config" are not allowed
+psql:/vagrant/pgdump:1132: ERROR:  multiple primary keys for table "service" are not allowed
+psql:/vagrant/pgdump:1140: ERROR:  multiple primary keys for table "service_provider" are not allowed
+psql:/vagrant/pgdump:1148: ERROR:  multiple primary keys for table "token" are not allowed
+psql:/vagrant/pgdump:1156: ERROR:  multiple primary keys for table "trust" are not allowed
+psql:/vagrant/pgdump:1164: ERROR:  multiple primary keys for table "trust_role" are not allowed
+psql:/vagrant/pgdump:1172: ERROR:  multiple primary keys for table "user_group_membership" are not allowed
+psql:/vagrant/pgdump:1180: ERROR:  multiple primary keys for table "user_option" are not allowed
+psql:/vagrant/pgdump:1188: ERROR:  multiple primary keys for table "user" are not allowed
+psql:/vagrant/pgdump:1196: ERROR:  multiple primary keys for table "whitelisted_config" are not allowed
+psql:/vagrant/pgdump:1203: ERROR:  syntax error at or near "using"
+CREATE INDEX group_id ON user_group_membership USING btree (group_id);
+                                               ^
+
+psql:/vagrant/pgdump:1210: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_access_token_authorizing_user_id ON access_token USING btree (authorizing_user_id);
+                                                                 ^
+
+psql:/vagrant/pgdump:1217: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_access_token_consumer_id ON access_token USING btree (consumer_id);
+                                                         ^
+
+psql:/vagrant/pgdump:1224: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_actor_id ON assignment USING btree (actor_id);
+                                       ^
+
+psql:/vagrant/pgdump:1231: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_request_token_consumer_id ON request_token USING btree (consumer_id);
+                                                           ^
+
+psql:/vagrant/pgdump:1238: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_audit_id_issued_before ON revocation_event USING btree (audit_id, issued_before);
+                                                                            ^
+
+psql:/vagrant/pgdump:1245: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_issued_before ON revocation_event USING btree (issued_before);
+                                                                   ^
+
+psql:/vagrant/pgdump:1252: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_new_revoked_at ON revocation_event USING btree (revoked_at);
+                                                                    ^
+
+psql:/vagrant/pgdump:1259: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_project_id_issued_before ON revocation_event USING btree (project_id, issued_before);
+                                                                              ^
+
+psql:/vagrant/pgdump:1266: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_user_id_issued_before ON revocation_event USING btree (user_id, issued_before);
+                                                                           ^
+
+psql:/vagrant/pgdump:1273: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_expires ON token USING btree (expires);
+                                       ^
+
+psql:/vagrant/pgdump:1280: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_expires_valid ON token USING btree (expires, valid);
+                                             ^
+
+psql:/vagrant/pgdump:1287: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_trust_id ON token USING btree (trust_id);
+                                        ^
+
+psql:/vagrant/pgdump:1294: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_user_id ON token USING btree (user_id);
+                                       ^
+
+psql:/vagrant/pgdump:1301: ERROR:  syntax error at or near "using"
+CREATE INDEX service_id ON endpoint USING btree (service_id);
+                                    ^
+
+psql:/vagrant/pgdump:1309: ERROR:  there is no unique constraint matching given keys for referenced table consumer
+psql:/vagrant/pgdump:1317: ERROR:  there is no unique constraint matching given keys for referenced table service
+psql:/vagrant/pgdump:1325: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                              ^
+
+psql:/vagrant/pgdump:1333: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_protocol_id_fkey FOREIGN KEY (protocol_id, idp_id) REFERENCES federation_protocol(id, idp_id) ON DELETE CASCADE;
+                                                                                                                                          ^
+
+psql:/vagrant/pgdump:1341: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+                                                                                                     ^
+
+psql:/vagrant/pgdump:1349: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federation_protocol
+    ADD CONSTRAINT federation_protocol_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                                   ^
+
+psql:/vagrant/pgdump:1357: ERROR:  there is no unique constraint matching given keys for referenced table region
+psql:/vagrant/pgdump:1365: ERROR:  there is no unique constraint matching given keys for referenced table "group"
+psql:/vagrant/pgdump:1373: ERROR:  there is no unique constraint matching given keys for referenced table "user"
+psql:/vagrant/pgdump:1381: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1389: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY idp_remote_ids
+    ADD CONSTRAINT idp_remote_ids_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                              ^
+
+psql:/vagrant/pgdump:1397: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY implied_role
+    ADD CONSTRAINT implied_role_implied_role_id_fkey FOREIGN KEY (implied_role_id) REFERENCES role(id) ON DELETE CASCADE;
+                                                                                                                 ^
+
+psql:/vagrant/pgdump:1405: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY implied_role
+    ADD CONSTRAINT implied_role_prior_role_id_fkey FOREIGN KEY (prior_role_id) REFERENCES role(id) ON DELETE CASCADE;
+                                                                                                             ^
+
+psql:/vagrant/pgdump:1413: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY local_user
+    ADD CONSTRAINT local_user_user_id_fkey FOREIGN KEY (user_id, domain_id) REFERENCES "user"(id, domain_id) ON UPDATE CASCADE ON DELETE CASCADE;
+                                                                                                                       ^
+
+psql:/vagrant/pgdump:1421: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY nonlocal_user
+    ADD CONSTRAINT nonlocal_user_user_id_fkey FOREIGN KEY (user_id, domain_id) REFERENCES "user"(id, domain_id) ON UPDATE CASCADE ON DELETE CASCADE;
+                                                                                                                          ^
+
+psql:/vagrant/pgdump:1429: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY password
+    ADD CONSTRAINT password_local_user_id_fkey FOREIGN KEY (local_user_id) REFERENCES local_user(id) ON DELETE CASCADE;
+                                                                                                               ^
+
+psql:/vagrant/pgdump:1437: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1445: ERROR:  there is no unique constraint matching given keys for referenced table endpoint_group
+psql:/vagrant/pgdump:1453: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1461: ERROR:  there is no unique constraint matching given keys for referenced table consumer
+psql:/vagrant/pgdump:1469: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1477: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY user_option
+    ADD CONSTRAINT user_option_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+                                                                                                  ^
+
+psql:/vagrant/pgdump:1484: ERROR:  syntax error at or near "public"
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+                     ^
+
+psql:/vagrant/pgdump:1485: ERROR:  syntax error at or near "public"
+REVOKE ALL ON SCHEMA public FROM postgres;
+                     ^
+
+psql:/vagrant/pgdump:1486: ERROR:  syntax error at or near "public"
+GRANT ALL ON SCHEMA public TO postgres;
+                    ^
+
+psql:/vagrant/pgdump:1487: ERROR:  syntax error at or near "public"
+GRANT ALL ON SCHEMA public TO PUBLIC;
+                    ^
+

@@ -1,0 +1,158 @@
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_PAPER = "fr_FR.UTF-8",
+	LC_ADDRESS = "fr_FR.UTF-8",
+	LC_MONETARY = "fr_FR.UTF-8",
+	LC_NUMERIC = "fr_FR.UTF-8",
+	LC_TELEPHONE = "fr_FR.UTF-8",
+	LC_IDENTIFICATION = "fr_FR.UTF-8",
+	LC_MEASUREMENT = "fr_FR.UTF-8",
+	LC_CTYPE = "fr_FR.UTF-8",
+	LC_TIME = "fr_FR.UTF-8",
+	LC_NAME = "fr_FR.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_US.UTF-8").
+DROP DATABASE
+CREATE DATABASE
+You are now connected to database "keystone" as user "root".
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:/vagrant/pgdump:513: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:520: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:527: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:534: ERROR:  unknown function: nextval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:588: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:638: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:672: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+psql:/vagrant/pgdump:732: ERROR:  unknown function: pg_catalog.setval()
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:/vagrant/pgdump:1338: ERROR:  foreign key requires an existing index on columns ("protocol_id", "idp_id")
+psql:/vagrant/pgdump:1346: ERROR:  foreign key requires an existing index on columns ("user_id")
+psql:/vagrant/pgdump:1354: ERROR:  foreign key requires an existing index on columns ("idp_id")
+psql:/vagrant/pgdump:1362: ERROR:  foreign key requires an existing index on columns ("region_id")
+ALTER TABLE
+ALTER TABLE
+psql:/vagrant/pgdump:1386: ERROR:  foreign key requires an existing index on columns ("domain_id")
+psql:/vagrant/pgdump:1394: ERROR:  foreign key requires an existing index on columns ("idp_id")
+psql:/vagrant/pgdump:1402: ERROR:  foreign key requires an existing index on columns ("implied_role_id")
+ALTER TABLE
+psql:/vagrant/pgdump:1418: ERROR:  foreign key requires an existing index on columns ("user_id", "domain_id")
+psql:/vagrant/pgdump:1427: ERROR:  foreign key requires an existing index on columns ("user_id", "domain_id")
+psql:/vagrant/pgdump:1435: ERROR:  foreign key requires an existing index on columns ("local_user_id")
+ALTER TABLE
+ALTER TABLE
+psql:/vagrant/pgdump:1459: ERROR:  foreign key requires an existing index on columns ("parent_id")
+ALTER TABLE
+psql:/vagrant/pgdump:1475: ERROR:  foreign key requires an existing index on columns ("domain_id")
+ALTER TABLE

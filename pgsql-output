@@ -1,0 +1,542 @@
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_PAPER = "fr_FR.UTF-8",
+	LC_ADDRESS = "fr_FR.UTF-8",
+	LC_MONETARY = "fr_FR.UTF-8",
+	LC_NUMERIC = "fr_FR.UTF-8",
+	LC_TELEPHONE = "fr_FR.UTF-8",
+	LC_IDENTIFICATION = "fr_FR.UTF-8",
+	LC_MEASUREMENT = "fr_FR.UTF-8",
+	LC_CTYPE = "fr_FR.UTF-8",
+	LC_TIME = "fr_FR.UTF-8",
+	LC_NAME = "fr_FR.UTF-8",
+	LANG = "en_US.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("en_US.UTF-8").
+psql:/vagrant/pgdump:5: ERROR:  unknown variable: "statement_timeout"
+psql:/vagrant/pgdump:6: ERROR:  unknown variable: "lock_timeout"
+SET
+SET
+psql:/vagrant/pgdump:9: ERROR:  unknown variable: "check_function_bodies"
+SET
+psql:/vagrant/pgdump:16: ERROR:  syntax error at or near "extension"
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+       ^
+
+psql:/vagrant/pgdump:23: ERROR:  syntax error at or near "comment"
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+^
+
+SET
+psql:/vagrant/pgdump:35: ERROR:  syntax error at or near "type"
+CREATE TYPE entity_type AS ENUM (
+       ^
+
+psql:/vagrant/pgdump:38: ERROR:  syntax error at or near "type"
+ALTER TYPE entity_type OWNER TO root;
+      ^
+
+psql:/vagrant/pgdump:49: ERROR:  syntax error at or near "type"
+CREATE TYPE type AS ENUM (
+       ^
+
+psql:/vagrant/pgdump:52: ERROR:  syntax error at or near "type"
+ALTER TYPE type OWNER TO root;
+      ^
+
+psql:/vagrant/pgdump:54: ERROR:  unknown variable: "default_tablespace"
+psql:/vagrant/pgdump:56: ERROR:  unknown variable: "default_with_oids"
+psql:/vagrant/pgdump:70: ERROR:  relation "access_token" already exists
+psql:/vagrant/pgdump:73: ERROR:  syntax error at or near "owner"
+ALTER TABLE access_token OWNER TO root;
+                         ^
+
+psql:/vagrant/pgdump:85: ERROR:  syntax error at or near "type"
+CREATE TABLE assignment (
+    type type NOT NULL,
+         ^
+
+psql:/vagrant/pgdump:88: ERROR:  syntax error at or near "owner"
+ALTER TABLE assignment OWNER TO root;
+                       ^
+
+psql:/vagrant/pgdump:97: ERROR:  relation "config_register" already exists
+psql:/vagrant/pgdump:100: ERROR:  syntax error at or near "owner"
+ALTER TABLE config_register OWNER TO root;
+                            ^
+
+psql:/vagrant/pgdump:111: ERROR:  relation "consumer" already exists
+psql:/vagrant/pgdump:114: ERROR:  syntax error at or near "owner"
+ALTER TABLE consumer OWNER TO root;
+                     ^
+
+psql:/vagrant/pgdump:128: ERROR:  relation "credential" already exists
+psql:/vagrant/pgdump:131: ERROR:  syntax error at or near "owner"
+ALTER TABLE credential OWNER TO root;
+                       ^
+
+psql:/vagrant/pgdump:146: ERROR:  relation "endpoint" already exists
+psql:/vagrant/pgdump:149: ERROR:  syntax error at or near "owner"
+ALTER TABLE endpoint OWNER TO root;
+                     ^
+
+psql:/vagrant/pgdump:160: ERROR:  relation "endpoint_group" already exists
+psql:/vagrant/pgdump:163: ERROR:  syntax error at or near "owner"
+ALTER TABLE endpoint_group OWNER TO root;
+                           ^
+
+psql:/vagrant/pgdump:176: ERROR:  relation "federated_user" already exists
+psql:/vagrant/pgdump:179: ERROR:  syntax error at or near "owner"
+ALTER TABLE federated_user OWNER TO root;
+                           ^
+
+psql:/vagrant/pgdump:190: ERROR:  syntax error at or near "sequence"
+CREATE SEQUENCE federated_user_id_seq
+       ^
+
+psql:/vagrant/pgdump:193: ERROR:  syntax error at or near "owner"
+ALTER TABLE federated_user_id_seq OWNER TO root;
+                                  ^
+
+psql:/vagrant/pgdump:199: ERROR:  syntax error at or near "sequence"
+ALTER SEQUENCE federated_user_id_seq OWNED BY federated_user.id;
+      ^
+
+psql:/vagrant/pgdump:210: ERROR:  relation "federation_protocol" already exists
+psql:/vagrant/pgdump:213: ERROR:  syntax error at or near "owner"
+ALTER TABLE federation_protocol OWNER TO root;
+                                ^
+
+psql:/vagrant/pgdump:225: ERROR:  relation "group" already exists
+psql:/vagrant/pgdump:228: ERROR:  syntax error at or near "owner"
+ALTER TABLE "group" OWNER TO root;
+                    ^
+
+psql:/vagrant/pgdump:239: ERROR:  syntax error at or near "entity_type"
+CREATE TABLE id_mapping (
+    public_id character varying(64) NOT NULL,
+    domain_id character varying(64) NOT NULL,
+    local_id character varying(64) NOT NULL,
+    entity_type entity_type NOT NULL
+                ^
+
+psql:/vagrant/pgdump:242: ERROR:  syntax error at or near "owner"
+ALTER TABLE id_mapping OWNER TO root;
+                       ^
+
+psql:/vagrant/pgdump:253: ERROR:  relation "identity_provider" already exists
+psql:/vagrant/pgdump:256: ERROR:  syntax error at or near "owner"
+ALTER TABLE identity_provider OWNER TO root;
+                              ^
+
+psql:/vagrant/pgdump:265: ERROR:  relation "idp_remote_ids" already exists
+psql:/vagrant/pgdump:268: ERROR:  syntax error at or near "owner"
+ALTER TABLE idp_remote_ids OWNER TO root;
+                           ^
+
+psql:/vagrant/pgdump:277: ERROR:  relation "implied_role" already exists
+psql:/vagrant/pgdump:280: ERROR:  syntax error at or near "owner"
+ALTER TABLE implied_role OWNER TO root;
+                         ^
+
+psql:/vagrant/pgdump:293: ERROR:  relation "local_user" already exists
+psql:/vagrant/pgdump:296: ERROR:  syntax error at or near "owner"
+ALTER TABLE local_user OWNER TO root;
+                       ^
+
+psql:/vagrant/pgdump:307: ERROR:  syntax error at or near "sequence"
+CREATE SEQUENCE local_user_id_seq
+       ^
+
+psql:/vagrant/pgdump:310: ERROR:  syntax error at or near "owner"
+ALTER TABLE local_user_id_seq OWNER TO root;
+                              ^
+
+psql:/vagrant/pgdump:316: ERROR:  syntax error at or near "sequence"
+ALTER SEQUENCE local_user_id_seq OWNED BY local_user.id;
+      ^
+
+psql:/vagrant/pgdump:326: ERROR:  relation "mapping" already exists
+psql:/vagrant/pgdump:329: ERROR:  syntax error at or near "owner"
+ALTER TABLE mapping OWNER TO root;
+                    ^
+
+psql:/vagrant/pgdump:339: ERROR:  relation "migrate_version" already exists
+psql:/vagrant/pgdump:342: ERROR:  syntax error at or near "owner"
+ALTER TABLE migrate_version OWNER TO root;
+                            ^
+
+psql:/vagrant/pgdump:352: ERROR:  relation "nonlocal_user" already exists
+psql:/vagrant/pgdump:355: ERROR:  syntax error at or near "owner"
+ALTER TABLE nonlocal_user OWNER TO root;
+                          ^
+
+psql:/vagrant/pgdump:368: ERROR:  relation "password" already exists
+psql:/vagrant/pgdump:371: ERROR:  syntax error at or near "owner"
+ALTER TABLE password OWNER TO root;
+                     ^
+
+psql:/vagrant/pgdump:382: ERROR:  syntax error at or near "sequence"
+CREATE SEQUENCE password_id_seq
+       ^
+
+psql:/vagrant/pgdump:385: ERROR:  syntax error at or near "owner"
+ALTER TABLE password_id_seq OWNER TO root;
+                            ^
+
+psql:/vagrant/pgdump:391: ERROR:  syntax error at or near "sequence"
+ALTER SEQUENCE password_id_seq OWNED BY password.id;
+      ^
+
+psql:/vagrant/pgdump:403: ERROR:  relation "policy" already exists
+psql:/vagrant/pgdump:406: ERROR:  syntax error at or near "owner"
+ALTER TABLE policy OWNER TO root;
+                   ^
+
+psql:/vagrant/pgdump:418: ERROR:  relation "policy_association" already exists
+psql:/vagrant/pgdump:421: ERROR:  syntax error at or near "owner"
+ALTER TABLE policy_association OWNER TO root;
+                               ^
+
+psql:/vagrant/pgdump:436: ERROR:  relation "project" already exists
+psql:/vagrant/pgdump:439: ERROR:  syntax error at or near "owner"
+ALTER TABLE project OWNER TO root;
+                    ^
+
+psql:/vagrant/pgdump:448: ERROR:  relation "project_endpoint" already exists
+psql:/vagrant/pgdump:451: ERROR:  syntax error at or near "owner"
+ALTER TABLE project_endpoint OWNER TO root;
+                             ^
+
+psql:/vagrant/pgdump:460: ERROR:  relation "project_endpoint_group" already exists
+psql:/vagrant/pgdump:463: ERROR:  syntax error at or near "owner"
+ALTER TABLE project_endpoint_group OWNER TO root;
+                                   ^
+
+psql:/vagrant/pgdump:474: ERROR:  relation "region" already exists
+psql:/vagrant/pgdump:477: ERROR:  syntax error at or near "owner"
+ALTER TABLE region OWNER TO root;
+                   ^
+
+psql:/vagrant/pgdump:492: ERROR:  relation "request_token" already exists
+psql:/vagrant/pgdump:495: ERROR:  syntax error at or near "owner"
+ALTER TABLE request_token OWNER TO root;
+                          ^
+
+psql:/vagrant/pgdump:515: ERROR:  relation "revocation_event" already exists
+psql:/vagrant/pgdump:518: ERROR:  syntax error at or near "owner"
+ALTER TABLE revocation_event OWNER TO root;
+                             ^
+
+psql:/vagrant/pgdump:529: ERROR:  syntax error at or near "sequence"
+CREATE SEQUENCE revocation_event_new_id_seq
+       ^
+
+psql:/vagrant/pgdump:532: ERROR:  syntax error at or near "owner"
+ALTER TABLE revocation_event_new_id_seq OWNER TO root;
+                                        ^
+
+psql:/vagrant/pgdump:538: ERROR:  syntax error at or near "sequence"
+ALTER SEQUENCE revocation_event_new_id_seq OWNED BY revocation_event.id;
+      ^
+
+psql:/vagrant/pgdump:550: ERROR:  relation "role" already exists
+psql:/vagrant/pgdump:553: ERROR:  syntax error at or near "owner"
+ALTER TABLE role OWNER TO root;
+                 ^
+
+psql:/vagrant/pgdump:564: ERROR:  relation "sensitive_config" already exists
+psql:/vagrant/pgdump:567: ERROR:  syntax error at or near "owner"
+ALTER TABLE sensitive_config OWNER TO root;
+                             ^
+
+psql:/vagrant/pgdump:578: ERROR:  relation "service" already exists
+psql:/vagrant/pgdump:581: ERROR:  syntax error at or near "owner"
+ALTER TABLE service OWNER TO root;
+                    ^
+
+psql:/vagrant/pgdump:594: ERROR:  relation "service_provider" already exists
+psql:/vagrant/pgdump:597: ERROR:  syntax error at or near "owner"
+ALTER TABLE service_provider OWNER TO root;
+                             ^
+
+psql:/vagrant/pgdump:610: ERROR:  relation "token" already exists
+psql:/vagrant/pgdump:613: ERROR:  syntax error at or near "owner"
+ALTER TABLE token OWNER TO root;
+                  ^
+
+psql:/vagrant/pgdump:629: ERROR:  relation "trust" already exists
+psql:/vagrant/pgdump:632: ERROR:  syntax error at or near "owner"
+ALTER TABLE trust OWNER TO root;
+                  ^
+
+psql:/vagrant/pgdump:641: ERROR:  relation "trust_role" already exists
+psql:/vagrant/pgdump:644: ERROR:  syntax error at or near "owner"
+ALTER TABLE trust_role OWNER TO root;
+                       ^
+
+psql:/vagrant/pgdump:658: ERROR:  relation "user" already exists
+psql:/vagrant/pgdump:661: ERROR:  syntax error at or near "owner"
+ALTER TABLE "user" OWNER TO root;
+                   ^
+
+psql:/vagrant/pgdump:670: ERROR:  relation "user_group_membership" already exists
+psql:/vagrant/pgdump:673: ERROR:  syntax error at or near "owner"
+ALTER TABLE user_group_membership OWNER TO root;
+                                  ^
+
+psql:/vagrant/pgdump:683: ERROR:  relation "user_option" already exists
+psql:/vagrant/pgdump:686: ERROR:  syntax error at or near "owner"
+ALTER TABLE user_option OWNER TO root;
+                        ^
+
+psql:/vagrant/pgdump:697: ERROR:  relation "whitelisted_config" already exists
+psql:/vagrant/pgdump:700: ERROR:  syntax error at or near "owner"
+ALTER TABLE whitelisted_config OWNER TO root;
+                               ^
+
+psql:/vagrant/pgdump:706: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:713: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:720: ERROR:  unknown function: nextval()
+psql:/vagrant/pgdump:727: ERROR:  unknown function: nextval()
+COPY 0
+psql:/vagrant/pgdump:742: ERROR:  table "assignment" does not exist
+psql:/vagrant/pgdump:755: invalid command \.
+psql:/vagrant/pgdump:762: ERROR:  syntax error at or near "userproject"
+UserProject	b58893be8a684d828c37490c29645426	705ada964f644a87bad7b16fdab27b63	5b1aed491b1e4da289e8f7bd4c87cab9	f
+^
+
+psql:/vagrant/pgdump:763: invalid command \.
+COPY 0
+COPY 0
+COPY 3
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:813: ERROR:  unknown function: pg_catalog.setval()
+COPY 0
+psql:/vagrant/pgdump:831: ERROR:  duplicate key value (domain_id,name)=('default','admins') violates unique constraint "ixu_group_name_domain_id"
+psql:/vagrant/pgdump:838: ERROR:  table "id_mapping" does not exist
+psql:/vagrant/pgdump:839: invalid command \.
+COPY 0
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:874: ERROR:  duplicate key value (domain_id,name)=('default','admin') violates unique constraint "local_user_domain_id_name_key"
+psql:/vagrant/pgdump:881: ERROR:  unknown function: pg_catalog.setval()
+COPY 0
+psql:/vagrant/pgdump:901: ERROR:  duplicate key value (repository_id)=('keystone') violates unique constraint "primary"
+COPY 0
+COPY 3
+psql:/vagrant/pgdump:927: ERROR:  unknown function: pg_catalog.setval()
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:958: ERROR:  duplicate key value (domain_id,name)=('<<keystone.domain.root>>','<<keystone.domain.root>>') violates unique constraint "ixu_project_name_domain_id"
+COPY 0
+COPY 0
+COPY 1
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:1006: ERROR:  unknown function: pg_catalog.setval()
+psql:/vagrant/pgdump:1020: ERROR:  duplicate key value (name,domain_id)=('admin','<<null>>') violates unique constraint "ixu_role_name_domain_id"
+COPY 0
+COPY 1
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:1080: ERROR:  duplicate key value (id,domain_id)=('b58893be8a684d828c37490c29645426','default') violates unique constraint "ixu_user_id_domain_id"
+COPY 0
+COPY 0
+COPY 0
+psql:/vagrant/pgdump:1112: ERROR:  multiple primary keys for table "access_token" are not allowed
+psql:/vagrant/pgdump:1120: ERROR:  table "assignment" does not exist
+psql:/vagrant/pgdump:1128: ERROR:  multiple primary keys for table "config_register" are not allowed
+psql:/vagrant/pgdump:1136: ERROR:  multiple primary keys for table "consumer" are not allowed
+psql:/vagrant/pgdump:1144: ERROR:  multiple primary keys for table "credential" are not allowed
+psql:/vagrant/pgdump:1152: ERROR:  table "id_mapping" does not exist
+psql:/vagrant/pgdump:1160: ERROR:  duplicate constraint name: "duplicate_trust_constraint"
+psql:/vagrant/pgdump:1168: ERROR:  multiple primary keys for table "endpoint_group" are not allowed
+psql:/vagrant/pgdump:1176: ERROR:  multiple primary keys for table "endpoint" are not allowed
+psql:/vagrant/pgdump:1184: ERROR:  duplicate constraint name: "federated_user_idp_id_protocol_id_unique_id_key"
+psql:/vagrant/pgdump:1192: ERROR:  multiple primary keys for table "federated_user" are not allowed
+psql:/vagrant/pgdump:1200: ERROR:  multiple primary keys for table "federation_protocol" are not allowed
+psql:/vagrant/pgdump:1208: ERROR:  multiple primary keys for table "group" are not allowed
+psql:/vagrant/pgdump:1216: ERROR:  table "id_mapping" does not exist
+psql:/vagrant/pgdump:1224: ERROR:  multiple primary keys for table "identity_provider" are not allowed
+psql:/vagrant/pgdump:1232: ERROR:  multiple primary keys for table "idp_remote_ids" are not allowed
+psql:/vagrant/pgdump:1240: ERROR:  multiple primary keys for table "implied_role" are not allowed
+psql:/vagrant/pgdump:1248: ERROR:  duplicate constraint name: "ixu_group_name_domain_id"
+psql:/vagrant/pgdump:1256: ERROR:  duplicate constraint name: "ixu_nonlocal_user_user_id"
+psql:/vagrant/pgdump:1264: ERROR:  duplicate constraint name: "ixu_project_name_domain_id"
+psql:/vagrant/pgdump:1272: ERROR:  duplicate constraint name: "ixu_role_name_domain_id"
+psql:/vagrant/pgdump:1280: ERROR:  duplicate constraint name: "ixu_user_id_domain_id"
+psql:/vagrant/pgdump:1288: ERROR:  duplicate constraint name: "local_user_domain_id_name_key"
+psql:/vagrant/pgdump:1296: ERROR:  multiple primary keys for table "local_user" are not allowed
+psql:/vagrant/pgdump:1304: ERROR:  duplicate constraint name: "local_user_user_id_key"
+psql:/vagrant/pgdump:1312: ERROR:  multiple primary keys for table "mapping" are not allowed
+psql:/vagrant/pgdump:1320: ERROR:  multiple primary keys for table "migrate_version" are not allowed
+psql:/vagrant/pgdump:1328: ERROR:  multiple primary keys for table "nonlocal_user" are not allowed
+psql:/vagrant/pgdump:1336: ERROR:  multiple primary keys for table "password" are not allowed
+psql:/vagrant/pgdump:1344: ERROR:  duplicate constraint name: "policy_association_endpoint_id_service_id_region_id_key"
+psql:/vagrant/pgdump:1352: ERROR:  multiple primary keys for table "policy_association" are not allowed
+psql:/vagrant/pgdump:1360: ERROR:  multiple primary keys for table "policy" are not allowed
+psql:/vagrant/pgdump:1368: ERROR:  multiple primary keys for table "project_endpoint_group" are not allowed
+psql:/vagrant/pgdump:1376: ERROR:  multiple primary keys for table "project_endpoint" are not allowed
+psql:/vagrant/pgdump:1384: ERROR:  multiple primary keys for table "project" are not allowed
+psql:/vagrant/pgdump:1392: ERROR:  multiple primary keys for table "region" are not allowed
+psql:/vagrant/pgdump:1400: ERROR:  multiple primary keys for table "request_token" are not allowed
+psql:/vagrant/pgdump:1408: ERROR:  multiple primary keys for table "revocation_event" are not allowed
+psql:/vagrant/pgdump:1416: ERROR:  multiple primary keys for table "role" are not allowed
+psql:/vagrant/pgdump:1424: ERROR:  multiple primary keys for table "sensitive_config" are not allowed
+psql:/vagrant/pgdump:1432: ERROR:  multiple primary keys for table "service" are not allowed
+psql:/vagrant/pgdump:1440: ERROR:  multiple primary keys for table "service_provider" are not allowed
+psql:/vagrant/pgdump:1448: ERROR:  multiple primary keys for table "token" are not allowed
+psql:/vagrant/pgdump:1456: ERROR:  multiple primary keys for table "trust" are not allowed
+psql:/vagrant/pgdump:1464: ERROR:  multiple primary keys for table "trust_role" are not allowed
+psql:/vagrant/pgdump:1472: ERROR:  multiple primary keys for table "user_group_membership" are not allowed
+psql:/vagrant/pgdump:1480: ERROR:  multiple primary keys for table "user_option" are not allowed
+psql:/vagrant/pgdump:1488: ERROR:  multiple primary keys for table "user" are not allowed
+psql:/vagrant/pgdump:1496: ERROR:  multiple primary keys for table "whitelisted_config" are not allowed
+psql:/vagrant/pgdump:1503: ERROR:  syntax error at or near "using"
+CREATE INDEX group_id ON user_group_membership USING btree (group_id);
+                                               ^
+
+psql:/vagrant/pgdump:1510: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_access_token_authorizing_user_id ON access_token USING btree (authorizing_user_id);
+                                                                 ^
+
+psql:/vagrant/pgdump:1517: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_access_token_consumer_id ON access_token USING btree (consumer_id);
+                                                         ^
+
+psql:/vagrant/pgdump:1524: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_actor_id ON assignment USING btree (actor_id);
+                                       ^
+
+psql:/vagrant/pgdump:1531: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_request_token_consumer_id ON request_token USING btree (consumer_id);
+                                                           ^
+
+psql:/vagrant/pgdump:1538: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_audit_id_issued_before ON revocation_event USING btree (audit_id, issued_before);
+                                                                            ^
+
+psql:/vagrant/pgdump:1545: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_issued_before ON revocation_event USING btree (issued_before);
+                                                                   ^
+
+psql:/vagrant/pgdump:1552: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_new_revoked_at ON revocation_event USING btree (revoked_at);
+                                                                    ^
+
+psql:/vagrant/pgdump:1559: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_project_id_issued_before ON revocation_event USING btree (project_id, issued_before);
+                                                                              ^
+
+psql:/vagrant/pgdump:1566: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_revocation_event_user_id_issued_before ON revocation_event USING btree (user_id, issued_before);
+                                                                           ^
+
+psql:/vagrant/pgdump:1573: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_expires ON token USING btree (expires);
+                                       ^
+
+psql:/vagrant/pgdump:1580: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_expires_valid ON token USING btree (expires, valid);
+                                             ^
+
+psql:/vagrant/pgdump:1587: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_trust_id ON token USING btree (trust_id);
+                                        ^
+
+psql:/vagrant/pgdump:1594: ERROR:  syntax error at or near "using"
+CREATE INDEX ix_token_user_id ON token USING btree (user_id);
+                                       ^
+
+psql:/vagrant/pgdump:1601: ERROR:  syntax error at or near "using"
+CREATE INDEX service_id ON endpoint USING btree (service_id);
+                                    ^
+
+psql:/vagrant/pgdump:1609: ERROR:  there is no unique constraint matching given keys for referenced table consumer
+psql:/vagrant/pgdump:1617: ERROR:  there is no unique constraint matching given keys for referenced table service
+psql:/vagrant/pgdump:1625: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                              ^
+
+psql:/vagrant/pgdump:1633: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_protocol_id_fkey FOREIGN KEY (protocol_id, idp_id) REFERENCES federation_protocol(id, idp_id) ON DELETE CASCADE;
+                                                                                                                                          ^
+
+psql:/vagrant/pgdump:1641: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federated_user
+    ADD CONSTRAINT federated_user_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+                                                                                                     ^
+
+psql:/vagrant/pgdump:1649: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY federation_protocol
+    ADD CONSTRAINT federation_protocol_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                                   ^
+
+psql:/vagrant/pgdump:1657: ERROR:  there is no unique constraint matching given keys for referenced table region
+psql:/vagrant/pgdump:1665: ERROR:  there is no unique constraint matching given keys for referenced table "group"
+psql:/vagrant/pgdump:1673: ERROR:  there is no unique constraint matching given keys for referenced table "user"
+psql:/vagrant/pgdump:1681: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1689: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY idp_remote_ids
+    ADD CONSTRAINT idp_remote_ids_idp_id_fkey FOREIGN KEY (idp_id) REFERENCES identity_provider(id) ON DELETE CASCADE;
+                                                                                                              ^
+
+psql:/vagrant/pgdump:1697: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY implied_role
+    ADD CONSTRAINT implied_role_implied_role_id_fkey FOREIGN KEY (implied_role_id) REFERENCES role(id) ON DELETE CASCADE;
+                                                                                                                 ^
+
+psql:/vagrant/pgdump:1705: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY implied_role
+    ADD CONSTRAINT implied_role_prior_role_id_fkey FOREIGN KEY (prior_role_id) REFERENCES role(id) ON DELETE CASCADE;
+                                                                                                             ^
+
+psql:/vagrant/pgdump:1713: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY local_user
+    ADD CONSTRAINT local_user_user_id_fkey FOREIGN KEY (user_id, domain_id) REFERENCES "user"(id, domain_id) ON UPDATE CASCADE ON DELETE CASCADE;
+                                                                                                                       ^
+
+psql:/vagrant/pgdump:1721: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY nonlocal_user
+    ADD CONSTRAINT nonlocal_user_user_id_fkey FOREIGN KEY (user_id, domain_id) REFERENCES "user"(id, domain_id) ON UPDATE CASCADE ON DELETE CASCADE;
+                                                                                                                          ^
+
+psql:/vagrant/pgdump:1729: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY password
+    ADD CONSTRAINT password_local_user_id_fkey FOREIGN KEY (local_user_id) REFERENCES local_user(id) ON DELETE CASCADE;
+                                                                                                               ^
+
+psql:/vagrant/pgdump:1737: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1745: ERROR:  there is no unique constraint matching given keys for referenced table endpoint_group
+psql:/vagrant/pgdump:1753: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1761: ERROR:  there is no unique constraint matching given keys for referenced table consumer
+psql:/vagrant/pgdump:1769: ERROR:  there is no unique constraint matching given keys for referenced table project
+psql:/vagrant/pgdump:1777: ERROR:  unimplemented at or near "cascade"
+ALTER TABLE ONLY user_option
+    ADD CONSTRAINT user_option_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+                                                                                                  ^
+
+psql:/vagrant/pgdump:1784: ERROR:  syntax error at or near "public"
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+                     ^
+
+psql:/vagrant/pgdump:1785: ERROR:  syntax error at or near "public"
+REVOKE ALL ON SCHEMA public FROM postgres;
+                     ^
+
+psql:/vagrant/pgdump:1786: ERROR:  syntax error at or near "public"
+GRANT ALL ON SCHEMA public TO postgres;
+                    ^
+
+psql:/vagrant/pgdump:1787: ERROR:  syntax error at or near "public"
+GRANT ALL ON SCHEMA public TO PUBLIC;
+                    ^
+
