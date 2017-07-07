@@ -14,13 +14,6 @@ Vagrant.configure(2) do |config|
       #override.ssh.username = 'root'
       override.ssh.insert_key = false
 
-      # Mount the home dir
-      override.vm.provision :ansible_local do |ansible|
-        ansible.install_mode = "pip"
-        ansible.version = "latest"
-        ansible.playbook = "bundle.yml"
-        ansible.verbose = "-vvvv"
-      end
       # project id must be unique accross all
       # your projects using vagrant-g5k to avoid conflict
       # on vm disks
@@ -28,7 +21,7 @@ Vagrant.configure(2) do |config|
       g5k.site = "rennes"
       g5k.username = "acarat"
       g5k.gateway = "access.grid5000.fr"
-      g5k.walltime = "05:30:00"
+      g5k.walltime = "01:50:00"
       #g5k.private_key = "your private key"
 
       # Image backed on the frontend filesystem
@@ -59,10 +52,10 @@ Vagrant.configure(2) do |config|
       ## cpu => -1 -> all the cpu of the reserved node
       ## mem => -1 -> all the mem of the reserved node
       ##
-      #g5k.resources = {
-      #  :cpu => 1,
-      #  :mem => 2048
-      #}
+      g5k.resources = {
+        :cpu => 6,
+        :mem => 8192
+      }
       ## Job container id
       ## see https://www.grid5000.fr/mediawiki/index.php/Advanced_OAR#Container_jobs
       # g5k.job_container_id = "907864"
@@ -74,6 +67,25 @@ Vagrant.configure(2) do |config|
     # add your vagrant options below as usual.
     config.vm.define "cockroachdb-os" do |my|
       my.vm.box = "dummy"
+      # Mount the home dir
+      my.vm.provision :ansible_local do |ansible|
+        ansible.install_mode = "pip"
+        ansible.version = "latest"
+        ansible.playbook = "bundle.yml"
+        ansible.verbose = "-vvvv"
+        ansible.extra_vars = {:cockroach_enabled => true}
+      end
     end
 
+    config.vm.define "mariadb-os" do |my|
+      my.vm.box = "dummy"
+      # Mount the home dir
+      my.vm.provision :ansible_local do |ansible|
+        ansible.install_mode = "pip"
+        ansible.version = "latest"
+        ansible.playbook = "bundle.yml"
+        ansible.verbose = "-vvvv"
+        ansible.extra_vars = {:cockroach_enabled => false}
+      end
+    end
 end

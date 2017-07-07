@@ -8,6 +8,7 @@
     with_items:
       - git
       - sudo
+      - vim
     become: true
 
   - name: Add user stack
@@ -47,48 +48,57 @@
     shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
     become: true    
 
- # #NOTE(acarat): Cockroach doesn't support -T psql option
- # - name: Patching devstack (psql)
- #   shell: sed -i 's/psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"/psql -h $DATABASE_HOST -U $DATABASE_USER -c "DROP DATABASE IF EXISTS $db"/' /devstack/lib/databases/postgresql
- #   become: true
- # 
- # - name: Patching devstack (createdb)
- #   shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U $DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
- #   become: true
+  #NOTE(acarat): Cockroach doesn't support -T psql option
+  - name: Patching devstack (psql)
+    shell: sed -i 's/psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"/psql -h $DATABASE_HOST -U $DATABASE_USER -c "DROP DATABASE IF EXISTS $db"/' /devstack/lib/databases/postgresql
+    become: true
+    when: cockroach_enabled
+  
+  - name: Patching devstack (createdb)
+    shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U $DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
+    become: true
+    when: cockroach_enabled
   
   - name: Getting CockroachDB binary
     get_url:
-      dest: ~/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
-      url: https://binaries.cockroachdb.com/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
-      #dest: ~/cockroach-v1.0.2.linux-amd64.tgz
-      #url: https://binaries.cockroachdb.com/cockroach-v1.0.2.linux-amd64.tgz    
-    
+      #url: https://binaries.cockroachdb.com/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
+      url: https://binaries.cockroachdb.com/cockroach-v1.0.2.linux-amd64.tgz    
+      dest: ~/cockroach.tgz
+    when: cockroach_enabled
+  
+
   - name: Unzip CockroachDB binary
     unarchive:
-      #src: ~/cockroach-v1.0.2.linux-amd64.tgz
-      src: ~/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
+      src: ~/cockroach.tgz
       dest: ~/
+    when: cockroach_enabled
+  
     
   - name: Install CockroachDB
-    #command: cp -i cockroach-v1.0.2.linux-amd64/cockroach /usr/local/bin
-    command: cp -i cockroach-v1.1-alpha.20170629.linux-amd64/cockroach /usr/local/bin
+    command: cp -i cockroach-v1.0.2.linux-amd64/cockroach /usr/local/bin
     args:
       chdir: /home/vagrant  
       creates: /usr/local/bin/cockroach
     become: true
+    when: cockroach_enabled
+  
 
   - name: Checking if Cockroach is running
     shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
     register: cockroach_is_started
+    when: cockroach_enabled
+  
    
   #NOTE(acarat): Go with 5432 port (pgsql default) because devstack doesn't let you specify a port
   - name: Start CockroachDB
-    command: cockroach start --host=localhost --insecure --background
+    command: cockroach start --host=localhost --port=5432 --insecure --background
     args:
       chdir: /opt/stack
     become: true
     become_user: stack
-    when: not cockroach_is_started.stdout|int|bool 
+    when: 
+      - cockroach_enabled
+      - not cockroach_is_started.stdout|int|bool 
 
   - name: Install CockroachDB sqlalchemy ORM anda custom oslo.db
     pip:
@@ -96,8 +106,9 @@
     with_items:
       - sqlalchemy==1.1.10
       - cockroachdb
- #     - git+https://github.com/cara-puce/oslo.db.git#egg=oslo_db
+      - git+https://github.com/cara-puce/oslo.db.git#egg=oslo_db
     become: true
+    when: cockroach_enabled
  
   - name: Configure Devstack in local.conf
     blockinfile:
@@ -113,19 +124,37 @@
         disable_service tempest swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
         disable_service mysql
         enable_service postgresql
-
-      #  BASE_SQL_CONN=cockroachdb://root@127.0.0.1
-      #  DATABASE_HOST=127.0.0.1
-      #  DATABASE_USER=root
-
-      #  [[post-config|$KEYSTONE_CONF]]
-
-      #  [database]
-      #  connection = cockroachdb://root@127.0.0.1:5432
-
       create: yes
     become: true    
     become_user: stack
+
+
+  - name: Add cockroachdb conf in local.conf
+    blockinfile:
+      path: /devstack/local.conf
+      block: |
+        [[local|localrc]]
+        ADMIN_PASSWORD=admin
+        DATABASE_PASSWORD=admin
+        RABBIT_PASSWORD=admin
+        SERVICE_PASSWORD=admin
+        LIBVIRT_TYPE=qemu
+
+        disable_service tempest swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
+        disable_service mysql
+        enable_service postgresql
+
+        BASE_SQL_CONN=cockroachdb://root@127.0.0.1
+        DATABASE_HOST=127.0.0.1
+        DATABASE_USER=root
+
+        [[post-config|$KEYSTONE_CONF]]
+
+        [database]
+        connection = cockroachdb://root@127.0.0.1:5432
+    become: true    
+    become_user: stack
+    when: cockroach_enabled
 
   - name: Clear Devstack
     shell: /devstack/unstack.sh
