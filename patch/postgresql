@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# lib/databases/postgresql
+# Functions to control the configuration and operation of the **PostgreSQL** database backend
+
+# Dependencies:
+#
+# - DATABASE_{HOST,USER,PASSWORD} must be defined
+
+# Save trace setting
+_XTRACE_PG=$(set +o | grep xtrace)
+set +o xtrace
+
+
+MAX_DB_CONNECTIONS=${MAX_DB_CONNECTIONS:-200}
+
+
+register_database postgresql
+
+
+# Functions
+# ---------
+
+function get_database_type_postgresql {
+    echo postgresql
+}
+
+# Get rid of everything enough to cleanly change database backends
+function cleanup_database_postgresql {
+   # stop_service postgresql
+   # if is_ubuntu; then
+   #     # Get ruthless with mysql
+   #     apt_get purge -y postgresql*
+   #     return
+   # elif is_fedora || is_suse; then
+   #     uninstall_package postgresql-server
+   # else
+        return
+   # fi
+}
+
+function recreate_database_postgresql {
+  return
+}
+
+
+function configure_database_postgresql {
+  return
+}
+
+function install_database_postgresql {
+    echo_summary "Installing postgresql"
+    deprecated "Use of postgresql in devstack is deprecated, and will be removed during the Pike cycle"
+    local pgpass=$HOME/.pgpass
+    if [[ ! -e $pgpass ]]; then
+        cat <<EOF > $pgpass
+*:*:*:$DATABASE_USER:$DATABASE_PASSWORD
+EOF
+        chmod 0600 $pgpass
+    else
+        sed -i "s/:root:\w\+/:root:$DATABASE_PASSWORD/" $pgpass
+    fi
+    if is_ubuntu; then
+        install_package postgresql
+    elif is_fedora || is_suse; then
+        install_package postgresql-server
+        if is_fedora; then
+            sudo systemctl enable postgresql
+        fi
+    else
+        exit_distro_not_supported "postgresql installation"
+    fi
+}
+
+function install_database_python_postgresql {
+    # Install Python client module
+    pip_install_gr psycopg2
+    ADDITIONAL_VENV_PACKAGES+=",psycopg2"
+}
+
+function database_connection_url_postgresql {
+    local db=$1
+    echo "$BASE_SQL_CONN/$db?client_encoding=utf8"
+}
+
+
+# Restore xtrace
+$_XTRACE_PG
+
+# Local variables:
+# mode: shell-script
+# End:

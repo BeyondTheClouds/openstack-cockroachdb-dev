@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
       g5k.site = "rennes"
       g5k.username = "acarat"
       g5k.gateway = "access.grid5000.fr"
-      g5k.walltime = "01:50:00"
+      g5k.walltime = "08:20:00"
       #g5k.private_key = "your private key"
 
       # Image backed on the frontend filesystem

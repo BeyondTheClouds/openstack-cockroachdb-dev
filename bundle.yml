@@ -48,17 +48,33 @@
     shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
     become: true    
 
-  #NOTE(acarat): Cockroach doesn't support -T psql option
-  - name: Patching devstack (psql)
-    shell: sed -i 's/psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"/psql -h $DATABASE_HOST -U $DATABASE_USER -c "DROP DATABASE IF EXISTS $db"/' /devstack/lib/databases/postgresql
+#  #NOTE(acarat): Cockroach doesn't support -T psql option
+#  - name: Patching devstack (psql)
+#    shell: sed -i 's/psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"/psql -h $DATABASE_HOST -U $DATABASE_USER -c "DROP DATABASE IF EXISTS $db"/' /devstack/lib/databases/postgresql
+#    become: true
+#    when: cockroach_enabled
+#  
+#  - name: Patching devstack (createdb)
+#    shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U $DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
+#    become: true
+#    when: cockroach_enabled
+
+  - name: Patching devstack (postgresql)
+    copy:
+      src: patch/postgresql
+      dest: /devstack/lib/databases/postgresql
+      owner: stack
     become: true
     when: cockroach_enabled
-  
-  - name: Patching devstack (createdb)
-    shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U $DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
+
+  - name: Patching devstack (keystone)
+    copy:
+      src: patch/keystone
+      dest: /devstack/lib/keystone
+      owner: stack
     become: true
     when: cockroach_enabled
-  
+
   - name: Getting CockroachDB binary
     get_url:
       #url: https://binaries.cockroachdb.com/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
@@ -105,11 +121,11 @@
       name: "{{item}}"
     with_items:
       - sqlalchemy==1.1.10
-      - cockroachdb
-      - git+https://github.com/cara-puce/oslo.db.git#egg=oslo_db
+      - git+https://github.com/bdarnell/cockroachdb-python.git#egg=cockroachdb
+      - git+https://github.com/cara-puce/oslo.db.git@stable/ocata#egg=oslo_db
     become: true
     when: cockroach_enabled
- 
+
   - name: Configure Devstack in local.conf
     blockinfile:
       path: /devstack/local.conf
@@ -161,9 +177,16 @@
     become: true
     become_user: stack
 
+  #NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
+  - name: Making migration by hand through a pgdump customized script
+    command: psql --host=127.0.0.1 --user=root --dbname=keystone --file=/vagrant/pgdump
+    when: cockroach_enabled 
+    become_user: stack
+
   - name: Run Devstack
     shell: /devstack/stack.sh &> /tmp/stack-logs
     args:
       executable: /bin/bash
     become: true
     become_user: stack
+
