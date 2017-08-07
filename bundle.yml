@@ -36,6 +36,15 @@
       depth: 1
     become: true
 
+  - name: Clone Rally
+    git: 
+      repo: https://github.com/openstack/rally
+      dest: /etc/rally
+      force: yes 
+      update: no
+      depth: 1
+    become: true
+
   - name: Giving /devstack to stack user
     file:
       path: /devstack
@@ -121,7 +130,7 @@
       name: "{{item}}"
     with_items:
       - sqlalchemy==1.1.10
-      - git+https://github.com/bdarnell/cockroachdb-python.git#egg=cockroachdb
+      - cockroachdb
       - git+https://github.com/cara-puce/oslo.db.git@stable/ocata#egg=oslo_db
     become: true
     when: cockroach_enabled
@@ -137,7 +146,7 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
 
-        disable_service tempest swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
+        disable_service swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
         disable_service mysql
         enable_service postgresql
       create: yes
@@ -156,7 +165,9 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
 
-        disable_service tempest swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
+        enable_plugin rally https://github.com/openstack/rally master
+
+        disable_service swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
         disable_service mysql
         enable_service postgresql
 
@@ -177,10 +188,34 @@
     become: true
     become_user: stack
 
+  - name: Checking if /tmp/stack-logs exists
+    stat:
+      path: /tmp/stack-logs
+    register: stat_result
+
+  - name: Correcting keystone's required SQLAlchemy version
+    command: sed -i 's/^SQLAlchemy[=, <, >].*$/SQLAlchemy==1.1.10/' /opt/stack/keystone/requirements.txt
+    become: true
+    become_user: stack
+    when: 
+      - cockroach_enabled
+      - stat_result.stat.exists 
+
+  - name: Correcting upper-constraint's required SQLAlchemy version
+    command: sed -i 's/^SQLAlchemy[=, <, >].*$/SQLAlchemy==1.1.10/' /opt/stack/requirements/upper-constraints.txt
+    become: true
+    become_user: stack
+    when: 
+      - cockroach_enabled
+      - stat_result.stat.exists 
+
   #NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
   - name: Making migration by hand through a pgdump customized script
     command: psql --host=127.0.0.1 --user=root --dbname=keystone --file=/vagrant/pgdump
-    when: cockroach_enabled 
+    when: 
+      - cockroach_enabled
+      - stat_result.stat.exists 
+    become: true
     become_user: stack
 
   - name: Run Devstack

@@ -77,15 +77,15 @@ Vagrant.configure(2) do |config|
       end
     end
 
-    config.vm.define "mariadb-os" do |my|
-      my.vm.box = "dummy"
-      # Mount the home dir
-      my.vm.provision :ansible_local do |ansible|
-        ansible.install_mode = "pip"
-        ansible.version = "latest"
-        ansible.playbook = "bundle.yml"
-        ansible.verbose = "-vvvv"
-        ansible.extra_vars = {:cockroach_enabled => false}
-      end
-    end
+    #config.vm.define "pgsql-os" do |my|
+    #  my.vm.box = "dummy"
+    #  # Mount the home dir
+    #  my.vm.provision :ansible_local do |ansible|
+    #    ansible.install_mode = "pip"
+    #    ansible.version = "latest"
+    #    ansible.playbook = "bundle.yml"
+    #    ansible.verbose = "-vvvv"
+    #    ansible.extra_vars = {:cockroach_enabled => false}
+    #  end
+    #end
 end
