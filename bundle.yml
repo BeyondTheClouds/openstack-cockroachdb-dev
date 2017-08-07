@@ -30,7 +30,7 @@
     git: 
       repo: https://git.openstack.org/openstack-dev/devstack
       dest: /devstack
-      version: stable/ocata
+      #version: stable/ocata
       force: yes 
       update: no
       depth: 1
@@ -193,25 +193,19 @@
       path: /tmp/stack-logs
     register: stat_result
 
-  - name: Correcting keystone's required SQLAlchemy version
-    command: sed -i 's/^SQLAlchemy[=, <, >].*$/SQLAlchemy==1.1.10/' /opt/stack/keystone/requirements.txt
-    become: true
-    become_user: stack
-    when: 
-      - cockroach_enabled
-      - stat_result.stat.exists 
-
-  - name: Correcting upper-constraint's required SQLAlchemy version
-    command: sed -i 's/^SQLAlchemy[=, <, >].*$/SQLAlchemy==1.1.10/' /opt/stack/requirements/upper-constraints.txt
-    become: true
-    become_user: stack
-    when: 
-      - cockroach_enabled
-      - stat_result.stat.exists 
-
   #NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
   - name: Making migration by hand through a pgdump customized script
     command: psql --host=127.0.0.1 --user=root --dbname=keystone --file=/vagrant/pgdump
+    when: 
+      - cockroach_enabled
+      - stat_result.stat.exists 
+    become: true
+    become_user: stack
+
+  - name: Adding tempest conf file
+    copy:
+      src: patch/tempest.conf
+      dest: /opt/stack/tempest/etc/tempest.conf
     when: 
       - cockroach_enabled
       - stat_result.stat.exists 

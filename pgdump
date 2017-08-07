@@ -15,7 +15,7 @@ CREATE DATABASE keystone ENCODING = 'UTF8' ;
 SET search_path = public, pg_catalog;
 
 --
--- Name: access_token; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: access_token; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE access_token (
@@ -30,7 +30,7 @@ CREATE TABLE access_token (
 
 
 --
--- Name: assignment; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE assignment (
@@ -44,7 +44,7 @@ CREATE TABLE assignment (
 
 
 --
--- Name: config_register; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: config_register; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE config_register (
@@ -54,7 +54,7 @@ CREATE TABLE config_register (
 
 
 --
--- Name: consumer; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: consumer; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE consumer (
@@ -66,7 +66,7 @@ CREATE TABLE consumer (
 
 
 --
--- Name: credential; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: credential; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE credential (
@@ -81,7 +81,7 @@ CREATE TABLE credential (
 
 
 --
--- Name: endpoint; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: endpoint; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE endpoint (
@@ -97,7 +97,7 @@ CREATE TABLE endpoint (
 
 
 --
--- Name: endpoint_group; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: endpoint_group; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE endpoint_group (
@@ -109,7 +109,7 @@ CREATE TABLE endpoint_group (
 
 
 --
--- Name: federated_user; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: federated_user; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE federated_user (
@@ -123,7 +123,7 @@ CREATE TABLE federated_user (
 
 
 --
--- Name: federation_protocol; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: federation_protocol; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE federation_protocol (
@@ -135,7 +135,7 @@ CREATE TABLE federation_protocol (
 
 
 --
--- Name: group; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: group; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE "group" (
@@ -148,7 +148,7 @@ CREATE TABLE "group" (
 
 
 --
--- Name: id_mapping; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: id_mapping; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE id_mapping (
@@ -160,7 +160,7 @@ CREATE TABLE id_mapping (
 
 
 --
--- Name: identity_provider; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: identity_provider; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE identity_provider (
@@ -172,7 +172,7 @@ CREATE TABLE identity_provider (
 
 
 --
--- Name: idp_remote_ids; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: idp_remote_ids; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE idp_remote_ids (
@@ -182,7 +182,7 @@ CREATE TABLE idp_remote_ids (
 
 
 --
--- Name: implied_role; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: implied_role; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE implied_role (
@@ -193,7 +193,7 @@ CREATE TABLE implied_role (
 
 
 --
--- Name: local_user; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: local_user; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE local_user (
@@ -206,7 +206,7 @@ CREATE TABLE local_user (
 );
 
 --
--- Name: mapping; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: mapping; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE mapping (
@@ -216,7 +216,7 @@ CREATE TABLE mapping (
 
 
 --
--- Name: migrate_version; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: migrate_version; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE migrate_version (
@@ -227,7 +227,7 @@ CREATE TABLE migrate_version (
 
 
 --
--- Name: nonlocal_user; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: nonlocal_user; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE nonlocal_user (
@@ -239,7 +239,7 @@ CREATE TABLE nonlocal_user (
 
 
 --
--- Name: password; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: password; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE password (
@@ -248,11 +248,12 @@ CREATE TABLE password (
     password character varying(128),
     expires_at timestamp without time zone,
     self_service boolean DEFAULT false NOT NULL,
+    password_hash character varying(255),
     created_at timestamp without time zone NOT NULL
 );
 
 --
--- Name: policy; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: policy; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE policy (
@@ -264,7 +265,7 @@ CREATE TABLE policy (
 
 
 --
--- Name: policy_association; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: policy_association; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE policy_association (
@@ -277,7 +278,7 @@ CREATE TABLE policy_association (
 
 
 --
--- Name: project; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: project; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE project (
@@ -293,7 +294,7 @@ CREATE TABLE project (
 
 
 --
--- Name: project_endpoint; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: project_endpoint; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE project_endpoint (
@@ -304,7 +305,7 @@ CREATE TABLE project_endpoint (
 
 
 --
--- Name: project_endpoint_group; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: project_endpoint_group; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE project_endpoint_group (
@@ -315,7 +316,7 @@ CREATE TABLE project_endpoint_group (
 
 
 --
--- Name: region; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: region; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE region (
@@ -327,7 +328,7 @@ CREATE TABLE region (
 
 
 --
--- Name: request_token; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: request_token; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE request_token (
@@ -343,7 +344,7 @@ CREATE TABLE request_token (
 
 
 --
--- Name: revocation_event; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: revocation_event; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE revocation_event (
@@ -363,7 +364,7 @@ CREATE TABLE revocation_event (
 );
 
 --
--- Name: role; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: role; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE role (
@@ -375,7 +376,7 @@ CREATE TABLE role (
 
 
 --
--- Name: sensitive_config; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sensitive_config; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE sensitive_config (
@@ -383,12 +384,12 @@ CREATE TABLE sensitive_config (
     "group" character varying(255) NOT NULL,
     option character varying(255) NOT NULL,
     value text NOT NULL,
-    CONSTRAINT sensitive_config_pkey PRIMARY KEY (domain_id, "group", option) 
+    CONSTRAINT sensitive_config_pkey PRIMARY KEY (domain_id, "group", option)
 );
 
 
 --
--- Name: service; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: service; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE service (
@@ -400,7 +401,7 @@ CREATE TABLE service (
 
 
 --
--- Name: service_provider; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: service_provider; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE service_provider (
@@ -414,7 +415,7 @@ CREATE TABLE service_provider (
 
 
 --
--- Name: token; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: token; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE token (
@@ -428,7 +429,7 @@ CREATE TABLE token (
 
 
 --
--- Name: trust; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: trust; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE trust (
@@ -445,7 +446,7 @@ CREATE TABLE trust (
 
 
 --
--- Name: trust_role; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: trust_role; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE trust_role (
@@ -456,7 +457,7 @@ CREATE TABLE trust_role (
 
 
 --
--- Name: user; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: user; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE "user" (
@@ -471,7 +472,7 @@ CREATE TABLE "user" (
 
 
 --
--- Name: user_group_membership; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: user_group_membership; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE user_group_membership (
@@ -482,7 +483,7 @@ CREATE TABLE user_group_membership (
 
 
 --
--- Name: user_option; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: user_option; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE user_option (
@@ -494,7 +495,7 @@ CREATE TABLE user_option (
 
 
 --
--- Name: whitelisted_config; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: whitelisted_config; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE whitelisted_config (
@@ -544,18 +545,22 @@ CREATE TABLE whitelisted_config (
 -- Data for Name: assignment; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'e020ad7e57784bff921eb4de6dadea47', 'b43769ce417e47fda1867fa27109cf80', '1e1dbe77bdb44216808b899c5a814e50', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserDomain', 'e020ad7e57784bff921eb4de6dadea47', 'default', '1e1dbe77bdb44216808b899c5a814e50', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '00e47a43fe214298b01f719c733178f0', 'c1526f7021354ba5a2e0d71d02d05084', 'f7cce93c7de54322845a8c23c076d3cc', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'e020ad7e57784bff921eb4de6dadea47', 'c1526f7021354ba5a2e0d71d02d05084', '1e1dbe77bdb44216808b899c5a814e50', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '00e47a43fe214298b01f719c733178f0', 'c1526f7021354ba5a2e0d71d02d05084', '85485366c2f1492daf78d1a9491ae607', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '00e47a43fe214298b01f719c733178f0', '5b05717948eb4bb1b8d97795f3c77c48', 'f7cce93c7de54322845a8c23c076d3cc', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '1bede935574941589f239a4c23795a18', 'f3fce43c2ea6445e8d85594587c4dbfd', 'f7cce93c7de54322845a8c23c076d3cc', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'e020ad7e57784bff921eb4de6dadea47', 'f3fce43c2ea6445e8d85594587c4dbfd', '1e1dbe77bdb44216808b899c5a814e50', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '1bede935574941589f239a4c23795a18', 'f3fce43c2ea6445e8d85594587c4dbfd', '85485366c2f1492daf78d1a9491ae607', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', 'ff019383a7a24f0daa3f9ed6f7aa59a6', 'c1526f7021354ba5a2e0d71d02d05084', 'f7cce93c7de54322845a8c23c076d3cc', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', 'ff019383a7a24f0daa3f9ed6f7aa59a6', 'f3fce43c2ea6445e8d85594587c4dbfd', 'f7cce93c7de54322845a8c23c076d3cc', false);
-INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '5342e62b0ea4421093270e93dc5c3878', 'b43769ce417e47fda1867fa27109cf80', '1e1dbe77bdb44216808b899c5a814e50', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '55fb270d74804acbab28596c1269ad70', '2fea7ab4188e4868af603fe38c4b59c6', '482170d403644763bc0c61db7b8a253e', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserDomain', '55fb270d74804acbab28596c1269ad70', 'default', '482170d403644763bc0c61db7b8a253e', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'b58174b1dcba41ac9b2f3f3cb13dccad', '14156f6eeae24a93b9ccf27849c52a0e', '764d59dcc77746f098fddaa220a5af7d', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '55fb270d74804acbab28596c1269ad70', '14156f6eeae24a93b9ccf27849c52a0e', '482170d403644763bc0c61db7b8a253e', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'b58174b1dcba41ac9b2f3f3cb13dccad', '14156f6eeae24a93b9ccf27849c52a0e', '355760e2ba924788a8ffaa6f5280ec90', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', 'b58174b1dcba41ac9b2f3f3cb13dccad', '2e68474bbe58407580645446d09ae7b3', '764d59dcc77746f098fddaa220a5af7d', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '02a30844bf9343d3bae8bfd21a34031a', 'a7b69a4e3d7f4836b9a25a611a176ed4', '764d59dcc77746f098fddaa220a5af7d', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '55fb270d74804acbab28596c1269ad70', 'a7b69a4e3d7f4836b9a25a611a176ed4', '482170d403644763bc0c61db7b8a253e', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '02a30844bf9343d3bae8bfd21a34031a', 'a7b69a4e3d7f4836b9a25a611a176ed4', '355760e2ba924788a8ffaa6f5280ec90', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '106c7d93397844f09665b4028a3aaae8', '14156f6eeae24a93b9ccf27849c52a0e', '764d59dcc77746f098fddaa220a5af7d', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '106c7d93397844f09665b4028a3aaae8', '14156f6eeae24a93b9ccf27849c52a0e', '355760e2ba924788a8ffaa6f5280ec90', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '106c7d93397844f09665b4028a3aaae8', 'a7b69a4e3d7f4836b9a25a611a176ed4', '764d59dcc77746f098fddaa220a5af7d', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '106c7d93397844f09665b4028a3aaae8', 'a7b69a4e3d7f4836b9a25a611a176ed4', '355760e2ba924788a8ffaa6f5280ec90', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('GroupProject', '70731be5a625467595b00d8fddd4e56f', '2fea7ab4188e4868af603fe38c4b59c6', '482170d403644763bc0c61db7b8a253e', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '04bff8408d0b4430af706e3156aa5ca8', 'c1efcb2e447e438f979c761623c244ee', 'b0aeb107e1c84189b7116df576b41b67', false);
+INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('UserProject', '04bff8408d0b4430af706e3156aa5ca8', 'c1efcb2e447e438f979c761623c244ee', '482170d403644763bc0c61db7b8a253e', false);
 
 
 --
@@ -580,9 +585,11 @@ INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('
 -- Data for Name: endpoint; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('155170c6a49a4cf9adad1c5bfa18d541', NULL, 'admin', 'ef99b321871349a5aba6b4b3b30e4bd7', 'http://10.0.2.15/identity_admin', '{}', true, 'RegionOne');
-INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('06a5ce7b72ce47a6af33f14cca46e39f', NULL, 'internal', 'ef99b321871349a5aba6b4b3b30e4bd7', 'http://10.0.2.15/identity', '{}', true, 'RegionOne');
-INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('e8aa0b95bd114a89b54bf603afd8f6f0', NULL, 'public', 'ef99b321871349a5aba6b4b3b30e4bd7', 'http://10.0.2.15/identity', '{}', true, 'RegionOne');
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('1c3aa55bf00c444e8c6aa5f1177b83be', NULL, 'admin', '5039c4f11d0f4373b79e1b7afbc53dbe', 'http://10.0.2.15/identity', '{}', true, 'RegionOne');
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('dd70859b81364633b5a94343b40f66bb', NULL, 'public', '5039c4f11d0f4373b79e1b7afbc53dbe', 'http://10.0.2.15/identity', '{}', true, 'RegionOne');
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('6c5456b041384f148b627650f27606a6', NULL, 'public', '53507aecefe249e09d8e82073a62c4e0', 'http://10.0.2.15/compute/v2/$(project_id)s', '{}', true, 'RegionOne');
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('08cdc2dff0ac4814b0382c375802673c', NULL, 'public', '267c47c8c1d049bba3453c6457cd486f', 'http://10.0.2.15/compute/v2.1', '{}', true, 'RegionOne');
+
 
 
 --- SELECT pg_catalog.setval('federated_user_id_seq', 1, false);
@@ -598,8 +605,9 @@ INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra,
 -- Data for Name: group; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO "group" (id, domain_id, name, description, extra) VALUES ('5342e62b0ea4421093270e93dc5c3878', 'default', 'admins', 'openstack admin group', '{}');
-INSERT INTO "group" (id, domain_id, name, description, extra) VALUES ('ff019383a7a24f0daa3f9ed6f7aa59a6', 'default', 'nonadmins', 'non-admin group', '{}');
+INSERT INTO "group" (id, domain_id, name, description, extra) VALUES ('70731be5a625467595b00d8fddd4e56f', 'default', 'admins', 'openstack admin group', '{}');
+INSERT INTO "group" (id, domain_id, name, description, extra) VALUES ('106c7d93397844f09665b4028a3aaae8', 'default', 'nonadmins', 'non-admin group', '{}');
+
 
 
 --
@@ -630,10 +638,10 @@ INSERT INTO "group" (id, domain_id, name, description, extra) VALUES ('ff019383a
 -- Data for Name: local_user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (1, 'e020ad7e57784bff921eb4de6dadea47', 'default', 'admin', 0, NULL);
-INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (2, '00e47a43fe214298b01f719c733178f0', 'default', 'demo', 0, NULL);
-INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (3, '1bede935574941589f239a4c23795a18', 'default', 'alt_demo', 0, NULL);
-
+INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (1, '55fb270d74804acbab28596c1269ad70', 'default', 'admin', 0, NULL);
+INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (2, 'b58174b1dcba41ac9b2f3f3cb13dccad', 'default', 'demo', 0, NULL);
+INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (3, '02a30844bf9343d3bae8bfd21a34031a', 'default', 'alt_demo', 0, NULL);
+INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_auth_at) VALUES (4, '04bff8408d0b4430af706e3156aa5ca8', 'default', 'nova', 0, NULL);
 
 --- SELECT pg_catalog.setval('local_user_id_seq', 3, true);
 
@@ -648,10 +656,11 @@ INSERT INTO local_user (id, user_id, domain_id, name, failed_auth_count, failed_
 -- Data for Name: migrate_version; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_data_migrate', '/opt/stack/keystone/keystone/common/sql/data_migration_repo', 16);
-INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_contract', '/opt/stack/keystone/keystone/common/sql/contract_repo', 16);
+INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_data_migrate', '/opt/stack/keystone/keystone/common/sql/data_migration_repo', 23);
 INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone', '/opt/stack/keystone/keystone/common/sql/migrate_repo', 109);
-INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_expand', '/opt/stack/keystone/keystone/common/sql/expand_repo', 16);
+INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_contract', '/opt/stack/keystone/keystone/common/sql/contract_repo', 23);
+INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('keystone_expand', '/opt/stack/keystone/keystone/common/sql/expand_repo', 23);
+
 
 
 --
@@ -664,9 +673,10 @@ INSERT INTO migrate_version (repository_id, repository_path, version) VALUES ('k
 -- Data for Name: password; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO password (id, local_user_id, password, expires_at, self_service, created_at) VALUES (1, 1, '$6$rounds=10000$61sI/SRR6uZ.3oE5$RwIzUwoHNYpSgq.lb9vKICmgRIMdbE8uov5A5CpGLbFekV2tv4wViF1TfNCFEsYyAFt1k0a4ZLsg2ygI3cCjh1', NULL, false, '2017-07-05 16:00:58.591163');
-INSERT INTO password (id, local_user_id, password, expires_at, self_service, created_at) VALUES (2, 2, '$6$rounds=10000$WlU1nE/NJe8rmcF.$KkhxZ1UxzIlZyWaaYuJo0D8lvlR.1JkeL/BjATG5HT9xJ5vyXTy4zP1.03n48W.KJs..7Xn5odiV7TyyKDfuB1', NULL, false, '2017-07-05 16:01:34.902076');
-INSERT INTO password (id, local_user_id, password, expires_at, self_service, created_at) VALUES (3, 3, '$6$rounds=10000$WLlnwQYRzHAnUG00$13B9coKqjDA73SrBI7cYd708cNPG2pDw6NlxfACjTU3JZctKx3xGSmZ9MMZHAFElZ7odBhUMGE/DyYq8SmceP0', NULL, false, '2017-07-05 16:01:52.358138');
+INSERT INTO password (id, local_user_id, password, expires_at, self_service, password_hash, created_at) VALUES (1, 1, NULL, NULL, false, '$2b$04$jUGX3mKPdxaLeoNswtjv/uA/7LieC0YMb9Pwsm6gQWJW1hZ/hzVeq', '2017-08-07 15:30:26.37489');
+INSERT INTO password (id, local_user_id, password, expires_at, self_service, password_hash, created_at) VALUES (2, 2, NULL, NULL, false, '$2b$04$dk98M3p94.NQuqnBew88oekybEsK61EC4YA3msaO2UWbuOt8j9iQq', '2017-08-07 15:30:48.420999');
+INSERT INTO password (id, local_user_id, password, expires_at, self_service, password_hash, created_at) VALUES (3, 3, NULL, NULL, false, '$2b$04$MN/iWh8RS76rYUx7TePHNeXQiz7rX0NSpzM6Sy4elv9KViXXqZPAG', '2017-08-07 15:31:09.44024');
+INSERT INTO password (id, local_user_id, password, expires_at, self_service, password_hash, created_at) VALUES (4, 4, NULL, NULL, false, '$2b$04$qe6O9TtZSGjHU54czjfZCuMW66o/VhA0e8ZI87x4CTm1S0Czu3ju2', '2017-08-07 15:31:50.31292');
 
 
 --- SELECT pg_catalog.setval('password_id_seq', 3, true);
@@ -690,11 +700,11 @@ INSERT INTO password (id, local_user_id, password, expires_at, self_service, cre
 
 INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('<<keystone.domain.root>>', '<<keystone.domain.root>>', '{}', '', false, '<<keystone.domain.root>>', NULL, true);
 INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('default', 'Default', '{}', 'The default domain', true, '<<keystone.domain.root>>', NULL, true);
-INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('b43769ce417e47fda1867fa27109cf80', 'admin', '{}', 'Bootstrap project for initializing the cloud.', true, 'default', 'default', false);
-INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('0ab180eb3b9e4bd3a0a795e017f5eb23', 'service', '{}', '', true, 'default', 'default', false);
-INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('5b05717948eb4bb1b8d97795f3c77c48', 'invisible_to_admin', '{}', '', true, 'default', 'default', false);
-INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('c1526f7021354ba5a2e0d71d02d05084', 'demo', '{}', '', true, 'default', 'default', false);
-INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('f3fce43c2ea6445e8d85594587c4dbfd', 'alt_demo', '{}', '', true, 'default', 'default', false);
+INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('2fea7ab4188e4868af603fe38c4b59c6', 'admin', '{}', 'Bootstrap project for initializing the cloud.', true, 'default', 'default', false);
+INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('c1efcb2e447e438f979c761623c244ee', 'service', '{}', '', true, 'default', 'default', false);
+INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('2e68474bbe58407580645446d09ae7b3', 'invisible_to_admin', '{}', '', true, 'default', 'default', false);
+INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('14156f6eeae24a93b9ccf27849c52a0e', 'demo', '{}', '', true, 'default', 'default', false);
+INSERT INTO project (id, name, extra, description, enabled, domain_id, parent_id, is_domain) VALUES ('a7b69a4e3d7f4836b9a25a611a176ed4', 'alt_demo', '{}', '', true, 'default', 'default', false);
 
 
 --
@@ -736,12 +746,13 @@ INSERT INTO region (id, description, parent_region_id, extra) VALUES ('RegionOne
 -- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO role (id, name, extra, domain_id) VALUES ('1e1dbe77bdb44216808b899c5a814e50', 'admin', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('482170d403644763bc0c61db7b8a253e', 'admin', '{}', '<<null>>');
 INSERT INTO role (id, name, extra, domain_id) VALUES ('9fe2ff9ee4384b1894a90878d3e92bab', '_member_', '{}', '<<null>>');
-INSERT INTO role (id, name, extra, domain_id) VALUES ('ea3391ed284443a7955abf1d0d42f3ea', 'service', '{}', '<<null>>');
-INSERT INTO role (id, name, extra, domain_id) VALUES ('c9b4f9889a9040a4baabadb033f42853', 'ResellerAdmin', '{}', '<<null>>');
-INSERT INTO role (id, name, extra, domain_id) VALUES ('f7cce93c7de54322845a8c23c076d3cc', 'Member', '{}', '<<null>>');
-INSERT INTO role (id, name, extra, domain_id) VALUES ('85485366c2f1492daf78d1a9491ae607', 'anotherrole', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('b0aeb107e1c84189b7116df576b41b67', 'service', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('ec9c276578c04f368f265a68de847b1e', 'ResellerAdmin', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('e30d995a46c6418eb84b2a7e8078cd4a', 'Member', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('764d59dcc77746f098fddaa220a5af7d', 'member', '{}', '<<null>>');
+INSERT INTO role (id, name, extra, domain_id) VALUES ('355760e2ba924788a8ffaa6f5280ec90', 'anotherrole', '{}', '<<null>>');
 
 
 --
@@ -754,7 +765,9 @@ INSERT INTO role (id, name, extra, domain_id) VALUES ('85485366c2f1492daf78d1a94
 -- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO service (id, type, enabled, extra) VALUES ('ef99b321871349a5aba6b4b3b30e4bd7', 'identity', true, '{"name": "keystone"}');
+INSERT INTO service (id, type, enabled, extra) VALUES ('5039c4f11d0f4373b79e1b7afbc53dbe', 'identity', true, '{"name": "keystone"}');
+INSERT INTO service (id, type, enabled, extra) VALUES ('53507aecefe249e09d8e82073a62c4e0', 'compute_legacy', true, '{"description": "Nova Compute Service (Legacy 2.0)", "name": "nova_legacy"}');
+INSERT INTO service (id, type, enabled, extra) VALUES ('267c47c8c1d049bba3453c6457cd486f', 'compute', true, '{"description": "Nova Compute Service", "name": "nova"}');
 
 
 --
@@ -785,9 +798,11 @@ INSERT INTO service (id, type, enabled, extra) VALUES ('ef99b321871349a5aba6b4b3
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('e020ad7e57784bff921eb4de6dadea47', '{}', true, NULL, '2017-07-05 16:00:58.591453', NULL, 'default');
-INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('00e47a43fe214298b01f719c733178f0', '{"email": "demo@example.com"}', true, NULL, '2017-07-05 16:01:34.902371', NULL, 'default');
-INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('1bede935574941589f239a4c23795a18', '{"email": "alt_demo@example.com"}', true, NULL, '2017-07-05 16:01:52.358437', NULL, 'default');
+INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('55fb270d74804acbab28596c1269ad70', '{}', true, NULL, '2017-08-07 15:30:26.402186', NULL, 'default');
+INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('b58174b1dcba41ac9b2f3f3cb13dccad', '{"email": "demo@example.com"}', true, NULL, '2017-08-07 15:30:48.42272', NULL, 'default');
+INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('02a30844bf9343d3bae8bfd21a34031a', '{"email": "alt_demo@example.com"}', true, NULL, '2017-08-07 15:31:09.441885', NULL, 'default');
+INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_active_at, domain_id) VALUES ('04bff8408d0b4430af706e3156aa5ca8', '{}', true, NULL, '2017-08-07 15:31:50.314458', NULL, 'default');
+
 
 
 --
@@ -809,7 +824,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: access_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: access_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY access_token
@@ -817,7 +832,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: assignment_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: assignment_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY assignment
@@ -825,7 +840,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: config_register_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: config_register_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY config_register
@@ -833,7 +848,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: consumer_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: consumer_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY consumer
@@ -841,7 +856,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: credential_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: credential_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY credential
@@ -849,7 +864,7 @@ INSERT INTO "user" (id, extra, enabled, default_project_id, created_at, last_act
 
 
 --
--- Name: domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY id_mapping
@@ -857,7 +872,7 @@ ALTER TABLE ONLY id_mapping
 
 
 --
--- Name: duplicate_trust_constraint; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: duplicate_trust_constraint; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY trust
@@ -865,7 +880,7 @@ ALTER TABLE ONLY trust
 
 
 --
--- Name: endpoint_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: endpoint_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY endpoint_group
@@ -873,7 +888,7 @@ ALTER TABLE ONLY trust
 
 
 --
--- Name: endpoint_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: endpoint_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY endpoint
@@ -881,7 +896,7 @@ ALTER TABLE ONLY trust
 
 
 --
--- Name: federated_user_idp_id_protocol_id_unique_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: federated_user_idp_id_protocol_id_unique_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY federated_user
@@ -889,7 +904,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: federated_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: federated_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY federated_user
@@ -897,7 +912,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: federation_protocol_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: federation_protocol_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY federation_protocol
@@ -905,7 +920,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY "group"
@@ -913,7 +928,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: id_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: id_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY id_mapping
@@ -921,7 +936,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: identity_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: identity_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY identity_provider
@@ -929,7 +944,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: idp_remote_ids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: idp_remote_ids_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY idp_remote_ids
@@ -937,7 +952,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: implied_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: implied_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY implied_role
@@ -945,7 +960,7 @@ ALTER TABLE ONLY federated_user
 
 
 --
--- Name: ixu_group_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ixu_group_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY "group"
@@ -953,7 +968,7 @@ ALTER TABLE ONLY "group"
 
 
 --
--- Name: ixu_nonlocal_user_user_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ixu_nonlocal_user_user_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY nonlocal_user
@@ -961,7 +976,7 @@ ALTER TABLE ONLY "group"
 
 
 --
--- Name: ixu_project_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ixu_project_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY project
@@ -969,7 +984,7 @@ ALTER TABLE ONLY project
 
 
 --
--- Name: ixu_role_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ixu_role_name_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY role
@@ -977,7 +992,7 @@ ALTER TABLE ONLY role
 
 
 --
--- Name: ixu_user_id_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ixu_user_id_domain_id; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY "user"
@@ -985,7 +1000,7 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: local_user_domain_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: local_user_domain_id_name_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY local_user
@@ -993,7 +1008,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: local_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: local_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY local_user
@@ -1001,7 +1016,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: local_user_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: local_user_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY local_user
@@ -1009,7 +1024,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY mapping
@@ -1017,7 +1032,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: migrate_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: migrate_version_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY migrate_version
@@ -1025,7 +1040,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: nonlocal_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: nonlocal_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY nonlocal_user
@@ -1033,7 +1048,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: password_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: password_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY password
@@ -1041,7 +1056,7 @@ ALTER TABLE ONLY local_user
 
 
 --
--- Name: policy_association_endpoint_id_service_id_region_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: policy_association_endpoint_id_service_id_region_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY policy_association
@@ -1049,7 +1064,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: policy_association_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: policy_association_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY policy_association
@@ -1057,7 +1072,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: policy_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: policy_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY policy
@@ -1065,7 +1080,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: project_endpoint_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: project_endpoint_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY project_endpoint_group
@@ -1073,7 +1088,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: project_endpoint_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: project_endpoint_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY project_endpoint
@@ -1081,7 +1096,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: project_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: project_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY project
@@ -1089,7 +1104,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: region_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: region_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY region
@@ -1097,7 +1112,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: request_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: request_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY request_token
@@ -1105,7 +1120,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: revocation_event_new_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: revocation_event_new_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY revocation_event
@@ -1113,7 +1128,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY role
@@ -1121,7 +1136,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: sensitive_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sensitive_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY sensitive_config
@@ -1129,7 +1144,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: service_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: service_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY service
@@ -1137,7 +1152,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: service_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: service_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY service_provider
@@ -1145,7 +1160,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: token_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY token
@@ -1153,7 +1168,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: trust_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: trust_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY trust
@@ -1161,7 +1176,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: trust_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: trust_role_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY trust_role
@@ -1169,7 +1184,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: user_group_membership_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_group_membership_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY user_group_membership
@@ -1177,7 +1192,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: user_option_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_option_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY user_option
@@ -1185,7 +1200,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY "user"
@@ -1193,7 +1208,7 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: whitelisted_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: whitelisted_config_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 --- ALTER TABLE ONLY whitelisted_config
@@ -1201,105 +1216,110 @@ ALTER TABLE ONLY policy_association
 
 
 --
--- Name: group_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: group_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX group_id ON user_group_membership (group_id);
 
 
 --
--- Name: ix_access_token_authorizing_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_access_token_authorizing_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_access_token_authorizing_user_id ON access_token (authorizing_user_id);
 
 
 --
--- Name: ix_access_token_consumer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_access_token_consumer_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_access_token_consumer_id ON access_token (consumer_id);
 
 
 --
--- Name: ix_actor_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_actor_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_actor_id ON assignment (actor_id);
 
+--
+-- Name: ix_default_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE INDEX ix_default_project_id ON "user" (default_project_id);
 
 --
--- Name: ix_request_token_consumer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_request_token_consumer_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_request_token_consumer_id ON request_token (consumer_id);
 
 
 --
--- Name: ix_revocation_event_audit_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_revocation_event_audit_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_revocation_event_audit_id_issued_before ON revocation_event (audit_id, issued_before);
 
 
 --
--- Name: ix_revocation_event_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_revocation_event_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_revocation_event_issued_before ON revocation_event  (issued_before);
 
 
 --
--- Name: ix_revocation_event_new_revoked_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_revocation_event_new_revoked_at; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_revocation_event_new_revoked_at ON revocation_event (revoked_at);
 
 
 --
--- Name: ix_revocation_event_project_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_revocation_event_project_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_revocation_event_project_id_issued_before ON revocation_event (project_id, issued_before);
 
 
 --
--- Name: ix_revocation_event_user_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_revocation_event_user_id_issued_before; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_revocation_event_user_id_issued_before ON revocation_event (user_id, issued_before);
 
 
 --
--- Name: ix_token_expires; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_token_expires; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_token_expires ON token (expires);
 
 
 --
--- Name: ix_token_expires_valid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_token_expires_valid; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_token_expires_valid ON token (expires, valid);
 
 
 --
--- Name: ix_token_trust_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_token_trust_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_token_trust_id ON token (trust_id);
 
 
 --
--- Name: ix_token_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: ix_token_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX ix_token_user_id ON token (user_id);
 
 
 --
--- Name: service_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: service_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX service_id ON endpoint (service_id);
@@ -1520,4 +1540,3 @@ ALTER TABLE ONLY user_option
 --
 -- PostgreSQL database dump complete
 --
-
