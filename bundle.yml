@@ -11,6 +11,12 @@
       - vim
     become: true
 
+  - name: Install CockroachDB python utilities (eg SQLA dialect)
+    pip:
+      name: cockroachdb
+    become: true
+    when: cockroach_enabled
+
   - name: Add user stack
     user:
       name: stack
@@ -36,15 +42,6 @@
       depth: 1
     become: true
 
-  - name: Clone Rally
-    git: 
-      repo: https://github.com/openstack/rally
-      dest: /etc/rally
-      force: yes 
-      update: no
-      depth: 1
-    become: true
-
   - name: Giving /devstack to stack user
     file:
       path: /devstack
@@ -56,17 +53,6 @@
   - name: Patching devstack (host-ip)
     shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
     become: true    
-
-#  #NOTE(acarat): Cockroach doesn't support -T psql option
-#  - name: Patching devstack (psql)
-#    shell: sed -i 's/psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"/psql -h $DATABASE_HOST -U $DATABASE_USER -c "DROP DATABASE IF EXISTS $db"/' /devstack/lib/databases/postgresql
-#    become: true
-#    when: cockroach_enabled
-#  
-#  - name: Patching devstack (createdb)
-#    shell: "sed -i 's/createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db/createdb -h $DATABASE_HOST -U $DATABASE_USER -E utf8 $db/' /devstack/lib/databases/postgresql" 
-#    become: true
-#    when: cockroach_enabled
 
   - name: Patching devstack (postgresql)
     copy:
@@ -84,20 +70,19 @@
     become: true
     when: cockroach_enabled
 
+
   - name: Getting CockroachDB binary
     get_url:
       #url: https://binaries.cockroachdb.com/cockroach-v1.1-alpha.20170629.linux-amd64.tgz
       url: https://binaries.cockroachdb.com/cockroach-v1.0.2.linux-amd64.tgz    
       dest: ~/cockroach.tgz
     when: cockroach_enabled
-  
 
   - name: Unzip CockroachDB binary
     unarchive:
       src: ~/cockroach.tgz
       dest: ~/
     when: cockroach_enabled
-  
     
   - name: Install CockroachDB
     command: cp -i cockroach-v1.0.2.linux-amd64/cockroach /usr/local/bin
@@ -107,13 +92,11 @@
     become: true
     when: cockroach_enabled
   
-
   - name: Checking if Cockroach is running
     shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
     register: cockroach_is_started
     when: cockroach_enabled
   
-   
   #NOTE(acarat): Go with 5432 port (pgsql default) because devstack doesn't let you specify a port
   - name: Start CockroachDB
     command: cockroach start --host=localhost --port=5432 --insecure --background
@@ -125,15 +108,6 @@
       - cockroach_enabled
       - not cockroach_is_started.stdout|int|bool 
 
-  - name: Install CockroachDB sqlalchemy ORM anda custom oslo.db
-    pip:
-      name: "{{item}}"
-    with_items:
-      - sqlalchemy==1.1.10
-      - cockroachdb
-      - git+https://github.com/cara-puce/oslo.db.git@stable/ocata#egg=oslo_db
-    become: true
-    when: cockroach_enabled
 
   - name: Configure Devstack in local.conf
     blockinfile:
@@ -144,12 +118,11 @@
         DATABASE_PASSWORD=admin
         RABBIT_PASSWORD=admin
         SERVICE_PASSWORD=admin
-        LIBVIRT_TYPE=qemu
 
-        disable_service swift horizon c-api c-sch c-vol dstat g-api g-reg n-api n-cauth n-cond n-cpu n-novnc n-sch placement-api q-agt q-dhcp q-l3 q-meta q-svc
         disable_service mysql
         enable_service postgresql
       create: yes
+    when: not cockroach_enabled
     become: true    
     become_user: stack
 
@@ -157,13 +130,13 @@
   - name: Add cockroachdb conf in local.conf
     blockinfile:
       path: /devstack/local.conf
+      create: yes
       block: |
         [[local|localrc]]
         ADMIN_PASSWORD=admin
         DATABASE_PASSWORD=admin
         RABBIT_PASSWORD=admin
         SERVICE_PASSWORD=admin
-        LIBVIRT_TYPE=qemu
 
         enable_plugin rally https://github.com/openstack/rally master
 
@@ -193,6 +166,16 @@
       path: /tmp/stack-logs
     register: stat_result
 
+  - name: Patching devstack (tempest)
+    copy:
+      src: patch/tempest.conf
+      dest: /opt/stack/tempest/etc/tempest.conf
+      owner: stack
+    become: true
+    when: 
+      - stat_result.stat.exists
+      - cockroach_enabled
+
   #NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
   - name: Making migration by hand through a pgdump customized script
     command: psql --host=127.0.0.1 --user=root --dbname=keystone --file=/vagrant/pgdump
@@ -202,15 +185,6 @@
     become: true
     become_user: stack
 
-  - name: Adding tempest conf file
-    copy:
-      src: patch/tempest.conf
-      dest: /opt/stack/tempest/etc/tempest.conf
-    when: 
-      - cockroach_enabled
-      - stat_result.stat.exists 
-    become: true
-    become_user: stack
 
   - name: Run Devstack
     shell: /devstack/stack.sh &> /tmp/stack-logs

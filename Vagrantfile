@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
       g5k.site = "rennes"
       g5k.username = "acarat"
       g5k.gateway = "access.grid5000.fr"
-      g5k.walltime = "08:20:00"
+      g5k.walltime = "08:30:00"
       #g5k.private_key = "your private key"
 
       # Image backed on the frontend filesystem
@@ -77,15 +77,15 @@ Vagrant.configure(2) do |config|
       end
     end
 
-    #config.vm.define "pgsql-os" do |my|
-    #  my.vm.box = "dummy"
-    #  # Mount the home dir
-    #  my.vm.provision :ansible_local do |ansible|
-    #    ansible.install_mode = "pip"
-    #    ansible.version = "latest"
-    #    ansible.playbook = "bundle.yml"
-    #    ansible.verbose = "-vvvv"
-    #    ansible.extra_vars = {:cockroach_enabled => false}
-    #  end
-    #end
+    config.vm.define "pgsql-os" do |my|
+      my.vm.box = "dummy"
+      # Mount the home dir
+      my.vm.provision :ansible_local do |ansible|
+        ansible.install_mode = "pip"
+        ansible.version = "latest"
+        ansible.playbook = "bundle.yml"
+        ansible.verbose = "-vvvv"
+        ansible.extra_vars = {:cockroach_enabled => false}
+      end
+    end
 end
