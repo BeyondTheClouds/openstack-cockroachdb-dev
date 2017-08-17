@@ -1,0 +1,3 @@
+[submodule "oslo.db"]
+	path = oslo.db
+	url = git@github.com:rcherrueau/oslo.db.git
