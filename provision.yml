@@ -27,11 +27,9 @@
     become: true
 
   - name: Install local dependencies
-    pip:
-      name: "{{item}}"
-      editable: yes
+    command: pip2.7 install -e "/vagrant/deps/{{item}}"
     with_items:
-      - /vagrant/oslo.db
+      - oslo.db
     become: true
 
 # ------------------------------------------------------------- CockroachDB
