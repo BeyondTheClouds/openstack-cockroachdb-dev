@@ -27,25 +27,73 @@ function get_database_type_postgresql {
 
 # Get rid of everything enough to cleanly change database backends
 function cleanup_database_postgresql {
-   # stop_service postgresql
-   # if is_ubuntu; then
-   #     # Get ruthless with mysql
-   #     apt_get purge -y postgresql*
-   #     return
-   # elif is_fedora || is_suse; then
-   #     uninstall_package postgresql-server
-   # else
-        return
-   # fi
+    # stop_service postgresql
+    # if is_ubuntu; then
+    #     # Get ruthless with mysql
+    #     apt_get purge -y postgresql*
+    #     return
+    # elif is_fedora || is_suse; then
+    #     uninstall_package postgresql-server
+    # else
+    #     return
+    # fi
+    return
 }
 
 function recreate_database_postgresql {
-  return
+    # local db=$1
+    # # Avoid unsightly error when calling dropdb when the database doesn't exist
+    # psql -h$DATABASE_HOST -U$DATABASE_USER -dtemplate1 -c "DROP DATABASE IF EXISTS $db"
+    # createdb -h $DATABASE_HOST -U$DATABASE_USER -l C -T template0 -E utf8 $db
+    return
 }
 
-
 function configure_database_postgresql {
-  return
+    # local pg_conf pg_dir pg_hba check_role version
+    # echo_summary "Configuring and starting PostgreSQL"
+    # if is_fedora; then
+    #     pg_hba=/var/lib/pgsql/data/pg_hba.conf
+    #     pg_conf=/var/lib/pgsql/data/postgresql.conf
+    #     if ! sudo [ -e $pg_hba ]; then
+    #         sudo postgresql-setup initdb
+    #     fi
+    # elif is_ubuntu; then
+    #     version=`psql --version | cut -d ' ' -f3 | cut -d. -f1-2`
+    #     if vercmp $version '>=' 9.3; then
+    #         if [ -z "`pg_lsclusters -h`" ]; then
+    #             echo 'No PostgreSQL clusters exist; will create one'
+    #             sudo pg_createcluster $version main --start
+    #         fi
+    #     fi
+    #     pg_dir=`find /etc/postgresql -name pg_hba.conf|xargs dirname`
+    #     pg_hba=$pg_dir/pg_hba.conf
+    #     pg_conf=$pg_dir/postgresql.conf
+    # elif is_suse; then
+    #     pg_hba=/var/lib/pgsql/data/pg_hba.conf
+    #     pg_conf=/var/lib/pgsql/data/postgresql.conf
+    #     # initdb is called when postgresql is first started
+    #     sudo [ -e $pg_hba ] || start_service postgresql
+    # else
+    #     exit_distro_not_supported "postgresql configuration"
+    # fi
+    # # Listen on all addresses
+    # sudo sed -i "/listen_addresses/s/.*/listen_addresses = '*'/" $pg_conf
+    # # Set max_connections
+    # sudo sed -i "/max_connections/s/.*/max_connections = $MAX_DB_CONNECTIONS/" $pg_conf
+    # # Do password auth from all IPv4 clients
+    # sudo sed -i "/^host/s/all\s\+127.0.0.1\/32\s\+ident/$DATABASE_USER\t0.0.0.0\/0\tpassword/" $pg_hba
+    # # Do password auth for all IPv6 clients
+    # sudo sed -i "/^host/s/all\s\+::1\/128\s\+ident/$DATABASE_USER\t::0\/0\tpassword/" $pg_hba
+    # restart_service postgresql
+
+    # # Create the role if it's not here or else alter it.
+    # check_role=$(sudo -u root sudo -u postgres -i psql -t -c "SELECT 'HERE' from pg_roles where rolname='$DATABASE_USER'")
+    # if [[ ${check_role} == *HERE ]];then
+    #     sudo -u root sudo -u postgres -i psql -c "ALTER ROLE $DATABASE_USER WITH SUPERUSER LOGIN PASSWORD '$DATABASE_PASSWORD'"
+    # else
+    #     sudo -u root sudo -u postgres -i psql -c "CREATE ROLE $DATABASE_USER WITH SUPERUSER LOGIN PASSWORD '$DATABASE_PASSWORD'"
+    # fi
+    return
 }
 
 function install_database_postgresql {
