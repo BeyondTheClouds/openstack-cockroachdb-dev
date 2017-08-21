@@ -1,0 +1,242 @@
+---
+- hosts: all
+  tasks:
+  - name: Install the bare necessities (apt)
+    apt:
+      name: "{{item}}"
+      update_cache: yes
+    with_items:
+      - git
+      - postgresql-client
+      - libldap2-dev
+      - libsasl2-dev
+      - libssl-dev
+      - silversearcher-ag
+      - sudo
+      - vim
+    become: true
+
+  - name: Install the bare necessities (pip)
+    pip:
+      name: "{{item}}"
+    with_items:
+      - ipython
+      - ipdb
+      - tox
+      - virtualenv
+    become: true
+
+  - name: Install local dependencies
+    command: pip2.7 install -e "/vagrant/deps/{{item}}"
+    with_items:
+      - oslo.db
+      - oslo.cockroachdb
+    become: true
+
+# ------------------------------------------------------------- CockroachDB
+  - name: Getting CockroachDB binary
+    get_url:
+      url: https://binaries.cockroachdb.com/cockroach-v1.0.4.linux-amd64.tgz
+      dest: ~/cockroach.tgz
+    when: backend == "cockroachdb"
+
+  - name: Unzip CockroachDB binary
+    unarchive:
+      src: ~/cockroach.tgz
+      dest: /tmp
+    when: backend == "cockroachdb"
+
+  - name: Install CockroachDB
+    shell: cp -i /tmp/cockroach-*.linux-amd64/cockroach /usr/local/bin
+    args:
+      creates: /usr/local/bin/cockroach
+    become: true
+    when: backend == "cockroachdb"
+
+  - name: Checking if Cockroach is running
+    shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
+    register: cockroach_is_started
+    when: backend == "cockroachdb"
+
+  # NOTE(acarat): Go with 5432 port (pgsql default) because devstack
+  # doesn't let you specify a port
+  - name: Start CockroachDB
+    command: cockroach start --host=localhost --port=5432 --insecure --background
+    args:
+      chdir: /home/vagrant
+    when:
+      - backend == "cockroachdb"
+      - not cockroach_is_started.stdout|int|bool
+
+  - name: Install CockroachDB SQLAlchemy Dialect
+    pip:
+      name: "{{item}}"
+    with_items:
+      - git+https://github.com/cockroachdb/cockroachdb-python.git#egg=cockroachdb
+    become: true
+    when: backend == "cockroachdb"
+
+
+# ---------------------------------------------------------------- Devstack
+  - name: Add stack user
+    user:
+      name: stack
+      shell: /bin/bash
+      home: /opt/stack
+      system: yes
+    become: true
+
+  - name: Source OS env at stack connection
+    blockinfile:
+      name: ~/.bashrc
+      state: present
+      block: |
+        . /devstack/openrc admin admin
+    become: true
+    become_user: stack
+
+  - name: Make stack user a becomeers
+    lineinfile:
+      dest: /etc/sudoers.d/stack
+      line: "stack ALL=(ALL) NOPASSWD: ALL"
+      create: yes
+    become: true
+
+  - name: Clone Devstack in /devstack
+    git:
+      repo: https://git.openstack.org/openstack-dev/devstack
+      dest: /devstack
+      force: yes
+      update: no
+      depth: 1
+    become: true
+
+  - name: Give /devstack to stack user
+    file:
+      path: /devstack
+      owner: stack
+      mode: 0777
+      recurse: yes
+    become: true
+
+  - name: Patching devstack (host-ip)
+    shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
+    become: true
+
+  - name: Patching devstack (postgresql)
+    copy:
+      src: patch/postgresql
+      dest: /devstack/lib/databases/postgresql
+      owner: stack
+    become: true
+    when: backend == "cockroachdb"
+
+  - name: Patching devstack (keystone with debug mode)
+    copy:
+      src: patch/keystone-debug-psql
+      dest: /devstack/lib/keystone
+      owner: stack
+    become: true
+    when: backend == "psql"
+
+  - name: Patching devstack (keystone with debug mode and cockroachdb)
+    copy:
+      src: patch/keystone-debug-cockroachdb
+      dest: /devstack/lib/keystone
+      owner: stack
+    become: true
+    when: backend == "cockroachdb"
+
+  - name: Create the minimal /devstack/local.conf
+    blockinfile:
+      path: /devstack/local.conf
+      marker: "# {mark} MINIMAL DEVSTACK"
+      block: |
+        [[local|localrc]]
+        ADMIN_PASSWORD=admin
+        DATABASE_PASSWORD=admin
+        RABBIT_PASSWORD=admin
+        SERVICE_PASSWORD=admin
+        LIBVIRT_TYPE=qemu
+        WSGI_MODE=uwsgi
+
+        # Only install keystone (psql) + tempest + rally
+        disable_service c-api
+        disable_service c-sch
+        disable_service c-vol
+        disable_service dstat
+        disable_service etcd3
+        disable_service g-api
+        disable_service g-reg
+        disable_service horizon
+        disable_service n-api-meta
+        disable_service n-api
+        disable_service n-cauth
+        disable_service n-cond-cell1
+        disable_service n-cpu
+        disable_service n-novnc
+        disable_service n-sch
+        disable_service n-super-cond
+        disable_service placement-api
+        disable_service q-agt
+        disable_service q-dhcp
+        disable_service q-l3
+        disable_service q-meta
+        disable_service q-svc
+        disable_service tempest
+
+        disable_service mysql
+        enable_service postgresql
+
+        enable_plugin rally https://github.com/openstack/rally master
+      create: yes
+    become: true
+    become_user: stack
+
+  - name: Setup CockroachDB in /devstack/local.conf
+    blockinfile:
+      path: /devstack/local.conf
+      marker: "# {mark} SETUP COCKROACHDB"
+      block: |
+        BASE_SQL_CONN=cockroachdb://root@127.0.0.1
+        DATABASE_HOST=127.0.0.1
+        DATABASE_USER=root
+
+        [[post-config|$KEYSTONE_CONF]]
+        [DEFAULT]
+        default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=DEBUG,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO
+
+        [database]
+        connection_debug = 100
+
+
+        [[post-config|/etc/rally/rally.conf]]
+        [database]
+        connection = sqlite:////etc/rally/.rally.sqlite
+      create: yes
+    become: true
+    become_user: stack
+    when: backend == "cockroachdb"
+
+  - name: Clear Devstack
+    shell: /devstack/unstack.sh
+    become: true
+    become_user: stack
+
+  # NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
+  - name: Making migration by hand through a pgdump customized script
+    command: psql --host=127.0.0.1 --user=root --file=/vagrant/pgdump/keystone-pike-cockroachdb.sql
+    when: backend == "cockroachdb"
+
+  - name: Start of Devstack deployment
+    debug:
+      msg:
+        - "Follow deployment with:"
+        - "vagrant ssh {{ backend }} -- tail -f /tmp/stack-logs"
+
+  - name: Run Devstack
+    shell: /devstack/stack.sh &> /tmp/stack-logs
+    args:
+      executable: /bin/bash
+    become: true
+    become_user: stack
