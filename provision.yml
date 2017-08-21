@@ -30,7 +30,7 @@
     command: pip2.7 install -e "/vagrant/deps/{{item}}"
     with_items:
       - oslo.db
-      # - oslo.cockroachdb
+      - oslo.cockroachdb
     become: true
 
 # ------------------------------------------------------------- CockroachDB
