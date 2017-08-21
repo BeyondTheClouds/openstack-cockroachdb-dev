@@ -11,10 +11,7 @@
       - libldap2-dev
       - libsasl2-dev
       - libssl-dev
-<<<<<<< HEAD
-=======
       - silversearcher-ag
->>>>>>> bec83ad5f0c02e5f696a46616f26a5d7ecca46c9
       - sudo
       - vim
     become: true
@@ -29,8 +26,6 @@
       - virtualenv
     become: true
 
-<<<<<<< HEAD
-=======
   - name: Install local dependencies
     command: pip2.7 install -e "/vagrant/deps/{{item}}"
     with_items:
@@ -38,7 +33,6 @@
       - oslo.cockroachdb
     become: true
 
->>>>>>> bec83ad5f0c02e5f696a46616f26a5d7ecca46c9
 # ------------------------------------------------------------- CockroachDB
   - name: Getting CockroachDB binary
     get_url:
@@ -92,8 +86,6 @@
       system: yes
     become: true
 
-<<<<<<< HEAD
-=======
   - name: Source OS env at stack connection
     blockinfile:
       name: ~/.bashrc
@@ -103,7 +95,6 @@
     become: true
     become_user: stack
 
->>>>>>> bec83ad5f0c02e5f696a46616f26a5d7ecca46c9
   - name: Make stack user a becomeers
     lineinfile:
       dest: /etc/sudoers.d/stack
@@ -212,11 +203,6 @@
         DATABASE_USER=root
 
         [[post-config|$KEYSTONE_CONF]]
-<<<<<<< HEAD
-
-        [database]
-        connection = cockroachdb://root@127.0.0.1:5432
-=======
         [DEFAULT]
         default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=DEBUG,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO
 
@@ -227,7 +213,6 @@
         [[post-config|/etc/rally/rally.conf]]
         [database]
         connection = sqlite:////etc/rally/.rally.sqlite
->>>>>>> bec83ad5f0c02e5f696a46616f26a5d7ecca46c9
       create: yes
     become: true
     become_user: stack
