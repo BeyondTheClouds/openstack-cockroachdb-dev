@@ -1,3 +1,3 @@
 [submodule "deps/oslo.db"]
 	path = deps/oslo.db
-	url = git@github.com:rcherrueau/oslo.db.git
+	url = https://github.com/cara-puce/oslo.db.git
