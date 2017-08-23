@@ -1,4 +1,0 @@
-[submodule "deps/oslo.db"]
-	path = deps/oslo.db
-	url = https://github.com/cara-puce/oslo.db.git
-	branch = master
