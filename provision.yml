@@ -29,7 +29,7 @@
   - name: Install local dependencies
     command: pip2.7 install -e "/vagrant/deps/{{item}}"
     with_items:
-      - oslo.db
+#      - oslo.db
       - oslo.cockroachdb
     become: true
 
@@ -201,6 +201,11 @@
         BASE_SQL_CONN=cockroachdb://root@127.0.0.1
         DATABASE_HOST=127.0.0.1
         DATABASE_USER=root
+        LIBS_FROM_GIT=oslo.db
+        OSLODB_REPO=https://github.com/BeyondTheClouds/oslo.db
+        OSLODB_BRANCH=cockroachdb
+        KEYSTONE_REPO=https://github.com/BeyondTheClouds/keystone
+        KEYSTONE_BRANCH=cockroachdb
 
         [[post-config|$KEYSTONE_CONF]]
         [DEFAULT]
