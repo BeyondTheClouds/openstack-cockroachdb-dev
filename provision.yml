@@ -26,13 +26,6 @@
       - virtualenv
     become: true
 
-  - name: Install local dependencies
-    command: pip2.7 install -e "/vagrant/deps/{{item}}"
-    with_items:
-#      - oslo.db
-      - oslo.cockroachdb
-    become: true
-
 # ------------------------------------------------------------- CockroachDB
   - name: Getting CockroachDB binary
     get_url:
