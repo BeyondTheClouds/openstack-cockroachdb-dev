@@ -1,8 +1,4 @@
-# Resume
-
 This project supplies a usable environment in order to make tests around [OpenStack][1] using [CockroachDB][2] as a backend for its services.
-
-
 
 This project is developed in the context of the [Discovery][3] initiative.
 
