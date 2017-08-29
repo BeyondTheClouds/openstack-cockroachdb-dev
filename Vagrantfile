@@ -3,7 +3,7 @@
 #
 # Vagrantfile Deploying 2 nodes in order to compare pgsql and cockroachdb backends
 #
-DEBUG = false
+DEBUG = true 
 
 Vagrant.configure(2) do |config|
 
@@ -68,7 +68,7 @@ Vagrant.configure(2) do |config|
     # If you want to use a local virtual machine (vbox, libvirt...)
     # add your vagrant options below as usual.
     config.vm.define "cockroachdb" do |roach|
-      roach.vm.box = "dummy"
+      roach.vm.box = "debian/contrib-jessie64"
       roach.vm.provision :ansible_local do |ansible|
         ansible.install_mode = "pip"
         ansible.version = "2.3.1.0"
@@ -82,7 +82,7 @@ Vagrant.configure(2) do |config|
     end
 
     config.vm.define "psql" do |psql|
-      psql.vm.box = "dummy"
+      psql.vm.box = "debian/contrib-jessie64"
       psql.vm.provision :ansible_local do |ansible|
         ansible.install_mode = "pip"
         ansible.version = "2.3.1.0"
