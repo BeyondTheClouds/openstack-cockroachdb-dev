@@ -11,6 +11,9 @@ To run this project you have to install [vagrant][4]. Once installed and configu
 * `vagrant up psql` to deploy a VM which will use PostgreSQL as backend for OpenStack' services.
 * `vagrant up` to deploy two VMs, one using CockroachDB and the other using PostgreSQL.
 
+
+You can also allow keystone debugging mode (_keystone-wsgi-admin_) by setting setting DEBUG to true in [Vagrantfile](Vagrantfile#L6).
+
 #### Deploying on Grid5000 platform.
 You can easily deploy this project on Grid5000 platform using [vagrant-g5k plugin][5].
 * `vagrant up [backend] --provider=g5k`

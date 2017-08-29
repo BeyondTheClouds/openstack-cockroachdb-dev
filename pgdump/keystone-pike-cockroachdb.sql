@@ -585,8 +585,8 @@ INSERT INTO assignment (type, actor_id, target_id, role_id, inherited) VALUES ('
 -- Data for Name: endpoint; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('cb7a1a15c55045b1a6e2c8a13f30e408', NULL, 'admin', '7c4cdc881fe844ebae5652b58cf3bd77', 'http://10.0.2.15', '{}', true, 'RegionOne');
-INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('036488f0659a4d40846f6719a094a5ed', NULL, 'public', '7c4cdc881fe844ebae5652b58cf3bd77', 'http://10.0.2.15', '{}', true, 'RegionOne');
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('cb7a1a15c55045b1a6e2c8a13f30e408', NULL, 'admin', '7c4cdc881fe844ebae5652b58cf3bd77', 'http://10.0.2.15/identity', '{}', true, 'RegionOne'); 
+INSERT INTO endpoint (id, legacy_endpoint_id, interface, service_id, url, extra, enabled, region_id) VALUES ('036488f0659a4d40846f6719a094a5ed', NULL, 'public', '7c4cdc881fe844ebae5652b58cf3bd77', 'http://10.0.2.15/identity', '{}', true, 'RegionOne');
 
 
 --
