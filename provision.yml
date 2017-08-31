@@ -98,6 +98,7 @@
   - name: Clone Devstack in /devstack
     git:
       repo: https://git.openstack.org/openstack-dev/devstack
+      version: stable/pike
       dest: /devstack
       force: yes
       update: no
@@ -179,18 +180,19 @@
         disable_service n-api-meta
         disable_service n-api
         disable_service n-cauth
+        disable_service n-cond
         disable_service n-cond-cell1
         disable_service n-cpu
         disable_service n-novnc
         disable_service n-sch
         disable_service n-super-cond
         disable_service placement-api
+        disable_service placement-client
         disable_service q-agt
         disable_service q-dhcp
         disable_service q-l3
         disable_service q-meta
         disable_service q-svc
-        disable_service tempest
 
         disable_service mysql
         enable_service postgresql
@@ -210,9 +212,9 @@
         DATABASE_USER=root
         LIBS_FROM_GIT=oslo.db
         OSLODB_REPO=https://github.com/BeyondTheClouds/oslo.db
-        OSLODB_BRANCH=cockroachdb
+        OSLODB_BRANCH=cockroachdb/pike
         KEYSTONE_REPO=https://github.com/BeyondTheClouds/keystone
-        KEYSTONE_BRANCH=cockroachdb
+        KEYSTONE_BRANCH=cockroachdb/pike
 
         [[post-config|$KEYSTONE_CONF]]
         [DEFAULT]
@@ -241,7 +243,7 @@
     command: psql --host=127.0.0.1 --user=root --file=/vagrant/pgdump/keystone-pike-cockroachdb.sql
     when: backend == "cockroachdb"
   
-  - name: Updating identity service adressei
+  - name: Updating identity service adresse
     command: cockroach sql  --host=localhost --port=5432 --database=keystone --insecure --execute="UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = 'cb7a1a15c55045b1a6e2c8a13f30e408'; UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = '036488f0659a4d40846f6719a094a5ed';"
     when: 
       - backend == "cockroachdb"

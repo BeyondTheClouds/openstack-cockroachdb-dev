@@ -3,7 +3,7 @@
 #
 # Vagrantfile Deploying 2 nodes in order to compare pgsql and cockroachdb backends
 #
-DEBUG = true
+DEBUG = false
 G5K_USER = "acarat"
 
 Vagrant.configure(2) do |config|
@@ -87,7 +87,8 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "provision.yml"
       # ansible.verbose = "-vvvv"
       ansible.extra_vars = {
-        :backend => "psql"
+        :backend => "psql",
+        :debug => DEBUG
       }
     end
   end
