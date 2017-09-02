@@ -98,7 +98,7 @@
   - name: Clone Devstack in /devstack
     git:
       repo: https://git.openstack.org/openstack-dev/devstack
-      # version: stable/pike
+      version: stable/pike
       dest: /opt/stack/devstack
       force: yes
       update: no
@@ -165,6 +165,7 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
         WSGI_MODE=uwsgi
+        TEMPEST_BRANCH=17.0.0
 
         # Only install keystone (psql) + rally
         disable_service c-api
@@ -178,7 +179,7 @@
         disable_service n-api-meta
         disable_service n-api
         disable_service n-cauth
-        disable_service n-cond
+        # disable_service n-cond
         disable_service n-cond-cell1
         disable_service n-cpu
         disable_service n-novnc
@@ -197,7 +198,6 @@
         enable_service postgresql
 
         enable_plugin rally https://github.com/openstack/rally master
-
       create: yes
     become: true
     become_user: stack
@@ -223,10 +223,10 @@
         [database]
         connection_debug = 100
 
+
         [[post-config|/etc/rally/rally.conf]]
         [database]
         connection = sqlite:////etc/rally/.rally.sqlite
-
       create: yes
     become: true
     become_user: stack
