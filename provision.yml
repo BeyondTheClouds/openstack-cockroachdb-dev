@@ -84,7 +84,7 @@
       name: ~/.bashrc
       state: present
       block: |
-        . /devstack/openrc admin admin
+        . /opt/stack/devstack/openrc admin admin
     become: true
     become_user: stack
 
@@ -98,39 +98,35 @@
   - name: Clone Devstack in /devstack
     git:
       repo: https://git.openstack.org/openstack-dev/devstack
-      version: stable/pike
-      dest: /devstack
+      # version: stable/pike
+      dest: /opt/stack/devstack
       force: yes
       update: no
       depth: 1
     become: true
-
-  - name: Give /devstack to stack user
-    file:
-      path: /devstack
-      owner: stack
-      mode: 0777
-      recurse: yes
-    become: true
+    become_user: stack
 
   - name: Patching devstack (host-ip)
-    shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /devstack/stackrc"
+    shell: "sed -i 's/HOST_IP=${HOST_IP:-}/ HOST_IP=10.0.2.15/' /opt/stack/devstack/stackrc"
     become: true
+    become_user: stack
 
-  - name: Patching devstack (don't create postgresql db)
+  - name: Patching devstack (do not create postgresql db)
     copy:
       src: patch/postgresql
-      dest: /devstack/lib/databases/postgresql
+      dest: /opt/stack/devstack/lib/databases/postgresql
       owner: stack
     become: true
+    become_user: stack
     when: backend == "cockroachdb"
 
   - name: Patching devstack (keystone with debug mode and psql)
     copy:
       src: patch/keystone-debug-psql
-      dest: /devstack/lib/keystone
+      dest: /opt/stack/devstack/lib/keystone
       owner: stack
     become: true
+    become_user: stack
     when:
       - backend == "psql"
       - debug == true
@@ -138,26 +134,28 @@
   - name: Patching devstack (keystone with cockroachdb)
     copy:
       src: patch/keystone-cockroachdb
-      dest: /devstack/lib/keystone
+      dest: /opt/stack/devstack/lib/keystone
       owner: stack
     become: true
-    when: 
+    become_user: stack
+    when:
       - backend == "cockroachdb"
       - debug == false
-  
+
   - name: Patching devstack (keystone with debug mode and cockroachdb)
     copy:
       src: patch/keystone-debug-cockroachdb
-      dest: /devstack/lib/keystone
+      dest: /opt/stack/devstack/lib/keystone
       owner: stack
     become: true
-    when: 
+    become_user: stack
+    when:
       - backend == "cockroachdb"
       - debug == true
 
-  - name: Create the minimal /devstack/local.conf
+  - name: Create the minimal /opt/stack/devstack/local.conf
     blockinfile:
-      path: /devstack/local.conf
+      path: /opt/stack/devstack/local.conf
       marker: "# {mark} MINIMAL DEVSTACK"
       block: |
         [[local|localrc]]
@@ -193,18 +191,20 @@
         disable_service q-l3
         disable_service q-meta
         disable_service q-svc
+        disable_service tempest
 
         disable_service mysql
         enable_service postgresql
 
         enable_plugin rally https://github.com/openstack/rally master
+
       create: yes
     become: true
     become_user: stack
 
-  - name: Setup CockroachDB in /devstack/local.conf
+  - name: Setup CockroachDB in /opt/stack/devstack/local.conf
     blockinfile:
-      path: /devstack/local.conf
+      path: /opt/stack/devstack/local.conf
       marker: "# {mark} SETUP COCKROACHDB"
       block: |
         BASE_SQL_CONN=cockroachdb://root@127.0.0.1
@@ -223,17 +223,17 @@
         [database]
         connection_debug = 100
 
-
         [[post-config|/etc/rally/rally.conf]]
         [database]
         connection = sqlite:////etc/rally/.rally.sqlite
+
       create: yes
     become: true
     become_user: stack
     when: backend == "cockroachdb"
 
   - name: Clear Devstack
-    shell: /devstack/unstack.sh
+    shell: /opt/stack/devstack/unstack.sh
     become: true
     become_user: stack
 
@@ -242,13 +242,13 @@
   - name: Making migration by hand through a pgdump customized script
     command: psql --host=127.0.0.1 --user=root --file=/vagrant/pgdump/keystone-pike-cockroachdb.sql
     when: backend == "cockroachdb"
-  
+
   - name: Updating identity service adresse
     command: cockroach sql  --host=localhost --port=5432 --database=keystone --insecure --execute="UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = 'cb7a1a15c55045b1a6e2c8a13f30e408'; UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = '036488f0659a4d40846f6719a094a5ed';"
-    when: 
+    when:
       - backend == "cockroachdb"
       - debug == true
-  
+
   - name: Start of Devstack deployment
     debug:
       msg:
@@ -256,7 +256,7 @@
         - "vagrant ssh {{ backend }} -- tail -f /tmp/stack-logs"
 
   - name: Run Devstack
-    shell: /devstack/stack.sh &> /tmp/stack-logs
+    shell: /opt/stack/devstack/stack.sh &> /tmp/stack-logs
     args:
       executable: /bin/bash
     become: true
