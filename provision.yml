@@ -165,7 +165,6 @@
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
         WSGI_MODE=uwsgi
-        TEMPEST_BRANCH=17.0.0
 
         # Only install keystone (psql) + rally
         disable_service c-api
@@ -179,6 +178,15 @@
         disable_service n-api-meta
         disable_service n-api
         disable_service n-cauth
+        # XXX: disabling n-cond makes an error in
+        # inc/meta-config:merge_config_file: that prevents the merge
+        # of the meta-config file, see
+        # https://bugs.launchpad.net/devstack/+bug/1714981
+        # ```
+        # awk: line 31: syntax # error at or near ,
+        # awk: line 41: syntax error at or near }
+        # awk: line 45: syntax error at or near }
+        # ```
         # disable_service n-cond
         disable_service n-cond-cell1
         disable_service n-cpu
@@ -192,6 +200,7 @@
         disable_service q-l3
         disable_service q-meta
         disable_service q-svc
+        # TODO: Activate tempest once you can disable n-cond
         disable_service tempest
 
         disable_service mysql
