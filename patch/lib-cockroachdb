@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# lib/databases/cockroachdb
+# Functions to control the configuration and operation of the **CockroachDB** database backend
+
+# Dependencies:
+#
+# - DATABASE_{HOST,USER,PASSWORD} must be defined
+
+# Save trace setting
+_XTRACE_PG=$(set +o | grep xtrace)
+set +o xtrace
+
+register_database cockroachdb
+
+ACTIVATE_COCKROACHDB=${ACTIVATE_COCKROACHDB:-True}
+
+# Functions
+# ---------
+
+# Returns the name of the protocol for SQLAlchemy url connexion
+function get_database_type_cockroachdb {
+    echo cockroachdb
+}
+
+# Get rid of everything enough to cleanly change database backends
+function cleanup_database_cockroachdb {
+    # Handle by provision.yml
+    return
+}
+
+function recreate_database_cockroachdb {
+    local db=$1
+
+    cockroach sql --execute "DROP DATABASE IF EXISTS $db CASCADE"\
+                  --host $DATABASE_HOST --user $DATABASE_USER\
+                  --port 26257 --insecure
+
+    cockroach sql --execute "CREATE DATABASE $db ENCODING = 'UTF8'"\
+                  --host $DATABASE_HOST --user $DATABASE_USER\
+                  --port 26257 --insecure
+}
+
+function configure_database_cockroachdb {
+    # Handle by provision.yml
+    return
+}
+
+function install_database_cockroachdb {
+    # Handle by provision.yml
+    return
+}
+
+function install_database_python_cockroachdb {
+    # Mostly handle by provision.yml
+    return
+}
+
+function database_connection_url_cockroachdb {
+    local db=$1
+    echo "$BASE_SQL_CONN:26257/$db?client_encoding=utf8"
+}
+
+function database_start_switch_cockroachdb {
+    DATABASE_BACKENDS="cockroachdb"
+    BASE_SQL_CONN=''
+    initialize_database_backends
+}
+
+
+function database_stop_switch_cockroachdb {
+    DATABASE_BACKENDS="postgresql"
+    BASE_SQL_CONN=''
+    initialize_database_backends
+}
+
+# Restore xtrace
+$_XTRACE_PG
+
+# Local variables:
+# mode: shell-script
+# End:

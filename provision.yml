@@ -11,6 +11,7 @@
       - libldap2-dev
       - libsasl2-dev
       - libssl-dev
+      - libvirt-bin
       - silversearcher-ag
       - sudo
       - vim
@@ -29,46 +30,38 @@
 # ------------------------------------------------------------- CockroachDB
   - name: Getting CockroachDB binary
     get_url:
-      url: https://binaries.cockroachdb.com/cockroach-v1.0.4.linux-amd64.tgz
+      url: https://binaries.cockroachdb.com/cockroach-v1.1.2.linux-amd64.tgz
       dest: ~/cockroach.tgz
-    when: backend == "cockroachdb"
 
   - name: Unzip CockroachDB binary
     unarchive:
       src: ~/cockroach.tgz
       dest: /tmp
-    when: backend == "cockroachdb"
 
   - name: Install CockroachDB
     shell: cp -i /tmp/cockroach-*.linux-amd64/cockroach /usr/local/bin
     args:
       creates: /usr/local/bin/cockroach
     become: true
-    when: backend == "cockroachdb"
 
-  - name: Checking if Cockroach is running
+  - name: Checking if CockroachDB is running
     shell: ps -ef | grep -v grep | grep  "cockroach start" | wc -l
     register: cockroach_is_started
-    when: backend == "cockroachdb"
 
-  # NOTE(acarat): Go with 5432 port (pgsql default) because devstack
-  # doesn't let you specify a port
   - name: Start CockroachDB
-    command: cockroach start --host=localhost --port=5432 --insecure --background
+    command: cockroach start --host=localhost --port=26257 --insecure --background
     args:
       chdir: /home/vagrant
-    when:
-      - backend == "cockroachdb"
-      - not cockroach_is_started.stdout|int|bool
+    when: not cockroach_is_started.stdout|int|bool
 
-  - name: Install CockroachDB SQLAlchemy Dialect
+  - name: Install CockroachDB SQLAlchemy Dialect + Updated version of sqlalchemy-migrate
     pip:
       name: "{{item}}"
+      editable: true # Doesn't work (https://github.com/ansible/ansible/issues/8355)
     with_items:
-      - git+https://github.com/cockroachdb/cockroachdb-python.git#egg=cockroachdb
+      - -e git+https://github.com/cockroachdb/cockroachdb-python.git#egg=cockroachdb
+      - -e git+https://github.com/rcherrueau/sqlalchemy-migrate.git@cockroachdb/pike#egg=sqlalchemy-migrate
     become: true
-    when: backend == "cockroachdb"
-
 
 # ---------------------------------------------------------------- Devstack
   - name: Add stack user
@@ -78,6 +71,13 @@
       home: /opt/stack
       system: yes
     become: true
+
+  - name: Always connect as stack user
+    blockinfile:
+      name: ~/.bashrc
+      state: present
+      block: |
+        sudo su stack
 
   - name: Source OS env at stack connection
     blockinfile:
@@ -111,158 +111,104 @@
     become: true
     become_user: stack
 
-  - name: Patching devstack (do not create postgresql db)
+  - name: Patching devstack (Add support to cockroachdb database)
     copy:
-      src: patch/postgresql
-      dest: /opt/stack/devstack/lib/databases/postgresql
+      src: patch/lib-cockroachdb
+      dest: /opt/stack/devstack/lib/databases/cockroachdb
       owner: stack
     become: true
     become_user: stack
-    when: backend == "cockroachdb"
 
-  - name: Patching devstack (keystone with debug mode and psql)
+  - name: Patching devstack (Put cockroachdb context around keystone/nova)
     copy:
-      src: patch/keystone-debug-psql
-      dest: /opt/stack/devstack/lib/keystone
+      src: patch/stack.sh
+      dest: /opt/stack/devstack/stack.sh
       owner: stack
+      mode: 0755
     become: true
     become_user: stack
-    when:
-      - backend == "psql"
-      - debug == true
 
-  - name: Patching devstack (keystone with cockroachdb)
-    copy:
-      src: patch/keystone-cockroachdb
-      dest: /opt/stack/devstack/lib/keystone
-      owner: stack
-    become: true
-    become_user: stack
-    when:
-      - backend == "cockroachdb"
-      - debug == false
-
-  - name: Patching devstack (keystone with debug mode and cockroachdb)
-    copy:
-      src: patch/keystone-debug-cockroachdb
-      dest: /opt/stack/devstack/lib/keystone
-      owner: stack
-    become: true
-    become_user: stack
-    when:
-      - backend == "cockroachdb"
-      - debug == true
-
-  - name: Create the minimal /opt/stack/devstack/local.conf
+  - name: Create the devstack local.conf
     blockinfile:
       path: /opt/stack/devstack/local.conf
       marker: "# {mark} MINIMAL DEVSTACK"
       block: |
         [[local|localrc]]
         ADMIN_PASSWORD=admin
-        DATABASE_PASSWORD=admin
+        DATABASE_HOST=127.0.0.1
+        DATABASE_USER=root
+        DATABASE_PASSWORD=
         RABBIT_PASSWORD=admin
         SERVICE_PASSWORD=admin
         LIBVIRT_TYPE=qemu
         WSGI_MODE=uwsgi
 
-        # Only install keystone (psql) + rally
-        disable_service c-api
-        disable_service c-sch
-        disable_service c-vol
-        disable_service dstat
-        disable_service etcd3
-        disable_service g-api
-        disable_service g-reg
-        disable_service horizon
-        disable_service n-api-meta
-        disable_service n-api
-        disable_service n-cauth
-        # XXX: disabling n-cond makes an error in
-        # inc/meta-config:merge_config_file: that prevents the merge
-        # of the meta-config file, see
-        # https://bugs.launchpad.net/devstack/+bug/1714981
-        # ```
-        # awk: line 31: syntax # error at or near ,
-        # awk: line 41: syntax error at or near }
-        # awk: line 45: syntax error at or near }
-        # ```
-        # disable_service n-cond
-        disable_service n-cond-cell1
-        disable_service n-cpu
-        disable_service n-novnc
-        disable_service n-sch
-        disable_service n-super-cond
-        disable_service placement-api
-        disable_service placement-client
-        disable_service q-agt
-        disable_service q-dhcp
-        disable_service q-l3
-        disable_service q-meta
-        disable_service q-svc
-        # TODO: Activate tempest once you can disable n-cond
-        disable_service tempest
-
-        disable_service mysql
-        enable_service postgresql
-
-        enable_plugin rally https://github.com/openstack/rally master
-      create: yes
-    become: true
-    become_user: stack
-
-  - name: Setup CockroachDB in /opt/stack/devstack/local.conf
-    blockinfile:
-      path: /opt/stack/devstack/local.conf
-      marker: "# {mark} SETUP COCKROACHDB"
-      block: |
-        BASE_SQL_CONN=cockroachdb://root@127.0.0.1
-        DATABASE_HOST=127.0.0.1
-        DATABASE_USER=root
         LIBS_FROM_GIT=oslo.db
         OSLODB_REPO=https://github.com/BeyondTheClouds/oslo.db
         OSLODB_BRANCH=cockroachdb/pike
+
         KEYSTONE_REPO=https://github.com/BeyondTheClouds/keystone
         KEYSTONE_BRANCH=cockroachdb/pike
 
+        # Note: Find services in $ENABLED_SERVICES
+        disable_service c-api
+        disable_service c-sch
+        disable_service c-vol
+        # disable_service dstat
+        # disable_service etcd3
+        # disable_service g-api
+        # disable_service g-reg
+        disable_service horizon
+        # disable_service n-api-meta
+        # disable_service n-api
+        # disable_service n-cauth
+        # disable_service n-cond
+        # disable_service n-cond-cell1
+        # disable_service n-cpu
+        # disable_service n-novnc
+        # disable_service n-sch
+        # disable_service n-super-cond
+        # disable_service placement-api
+        # disable_service placement-client
+        # disable_service q-agt
+        # disable_service q-dhcp
+        # disable_service q-l3
+        # disable_service q-meta
+        # disable_service q-svc
+        # disable_service tempest
+
+        disable_service mysql
+        enable_service postgresql
+        enable_service cockroachdb
+
+        # enable_plugin rally https://github.com/openstack/rally master
+
         [[post-config|$KEYSTONE_CONF]]
-        [DEFAULT]
-        default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=DEBUG,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO
-
         [database]
-        connection_debug = 100
+        connection_debug = 50
 
+        # [DEFAULT]
+        # default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=DEBUG,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO
 
-        [[post-config|/etc/rally/rally.conf]]
+        [[post-config|$NOVA_CONF]]
         [database]
-        connection = sqlite:////etc/rally/.rally.sqlite
+        connection_debug = 50
       create: yes
     become: true
     become_user: stack
-    when: backend == "cockroachdb"
 
   - name: Clear Devstack
-    shell: /opt/stack/devstack/unstack.sh
+    shell: /opt/stack/devstack/unstack.sh  &> /tmp/stack-logs
+    args:
+      executable: /bin/bash
     become: true
     become_user: stack
-
-
-  # NOTE(acarat): Hacking around migration because of some conflicts between cockroach and pgsql
-  - name: Making migration by hand through a pgdump customized script
-    command: psql --host=127.0.0.1 --user=root --file=/vagrant/pgdump/keystone-pike-cockroachdb.sql
-    when: backend == "cockroachdb"
-
-  - name: Updating identity service adresse
-    command: cockroach sql  --host=localhost --port=5432 --database=keystone --insecure --execute="UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = 'cb7a1a15c55045b1a6e2c8a13f30e408'; UPDATE endpoint SET url = 'http://10.0.2.15/' WHERE id = '036488f0659a4d40846f6719a094a5ed';"
-    when:
-      - backend == "cockroachdb"
-      - debug == true
 
   - name: Start of Devstack deployment
     debug:
       msg:
         - "Follow deployment with:"
-        - "vagrant ssh {{ backend }} -- tail -f /tmp/stack-logs"
+        - "vagrant ssh -- tail -f /tmp/stack-logs"
 
   - name: Run Devstack
     shell: /opt/stack/devstack/stack.sh &> /tmp/stack-logs
