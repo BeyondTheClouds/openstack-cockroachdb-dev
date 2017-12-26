@@ -4,6 +4,7 @@
 # Vagrantfile Deploying 2 nodes in order to compare pgsql and cockroachdb backends
 #
 DEBUG = false
+G5K_USER = "acarat"
 
 Vagrant.configure(2) do |config|
 

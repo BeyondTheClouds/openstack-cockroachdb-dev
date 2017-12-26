@@ -181,7 +181,7 @@
         enable_service postgresql
         enable_service cockroachdb
 
-        # enable_plugin rally https://github.com/openstack/rally master
+        enable_plugin rally https://github.com/openstack/rally master
 
         [[post-config|$KEYSTONE_CONF]]
         [database]

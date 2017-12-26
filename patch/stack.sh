@@ -897,7 +897,6 @@ if is_service_enabled neutron; then
     stack_install_service neutron
 fi
 
-database_start_switch_cockroachdb
 if is_service_enabled nova; then
     # Compute service
     stack_install_service nova
@@ -919,7 +918,6 @@ if is_service_enabled placement placement-client; then
         configure_placement_nova_compute
     fi
 fi
-database_stop_switch_cockroachdb
 
 if is_service_enabled horizon; then
     # django openstack_auth
@@ -1231,7 +1229,6 @@ fi
 # Compute Service
 # ---------------
 
-database_start_switch_cockroachdb
 if is_service_enabled nova; then
     echo_summary "Configuring Nova"
     init_nova
@@ -1250,7 +1247,6 @@ if is_service_enabled placement; then
     echo_summary "Configuring placement"
     init_placement
 fi
-database_stop_switch_cockroachdb
 
 
 # Extras Configuration
@@ -1318,12 +1314,10 @@ if is_service_enabled nova; then
 fi
 
 # Launch the nova-api and wait for it to answer before continuing
-database_start_switch_cockroachdb
 if is_service_enabled n-api; then
     echo_summary "Starting Nova API"
     start_nova_api
 fi
-database_stop_switch_cockroachdb
 
 if is_service_enabled neutron-api; then
     echo_summary "Starting Neutron"
@@ -1350,12 +1344,10 @@ fi
 
 # Start placement before any of the service that are likely to want
 # to use it to manage resource providers.
-database_start_switch_cockroachdb
 if is_service_enabled placement; then
     echo_summary "Starting Placement"
     start_placement
 fi
-database_stop_switch_cockroachdb
 
 if is_service_enabled neutron; then
     start_neutron
@@ -1366,13 +1358,11 @@ if is_service_enabled q-svc && [[ "$NEUTRON_CREATE_INITIAL_NETWORKS" == "True" ]
     create_neutron_initial_network
 fi
 
-database_start_switch_cockroachdb
 if is_service_enabled nova; then
     echo_summary "Starting Nova"
     start_nova
     create_flavors
 fi
-database_stop_switch_cockroachdb
 
 if is_service_enabled cinder; then
     echo_summary "Starting Cinder"
@@ -1453,11 +1443,9 @@ fi
 # Check that computes are all ready
 #
 # TODO(sdague): there should be some generic phase here.
-database_start_switch_cockroachdb
 if is_service_enabled n-cpu; then
     is_nova_ready
 fi
-database_stop_switch_cockroachdb
 
 # Check the status of running services
 service_check
@@ -1471,7 +1459,6 @@ check_libs_from_git
 # ----------------------
 
 # Do this late because it requires compute hosts to have started
-database_start_switch_cockroachdb
 if is_service_enabled n-api; then
     if is_service_enabled n-cpu; then
         $TOP_DIR/tools/discover_hosts.sh
@@ -1483,7 +1470,6 @@ if is_service_enabled n-api; then
         echo_summary "SKIPPING Cell setup because n-cpu is not enabled. You will have to do this manually before you have a working environment."
     fi
 fi
-database_stop_switch_cockroachdb
 
 # Bash completion
 # ===============
