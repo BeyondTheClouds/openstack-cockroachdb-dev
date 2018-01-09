@@ -10,8 +10,8 @@ Vagrant.configure(2) do |config|
 
   # Configuration for VirtualBox
   config.vm.provider :virtualbox do |vb, override|
-    vb.cpus = 4
-    vb.memory = 4096
+    vb.cpus = 6
+    vb.memory = 8192
     override.vm.synced_folder "./", "/vagrant_data",
                               owner: "vagrant",
                               group: "vagrant"
@@ -58,8 +58,8 @@ Vagrant.configure(2) do |config|
 
     ## VM size customization default values are
     g5k.resources = {
-      :cpu => 6,
-      :mem => 8192
+      :cpu => 4,
+      :mem => 4096
     }
   end #g5k
 
@@ -72,22 +72,6 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "provision.yml"
       # ansible.verbose = "-vvvv"
       ansible.extra_vars = {
-        :backend => "cockroachdb",
-        :debug => DEBUG
-      }
-    end
-  end
-
-  # VM for PostreSQL backend
-  config.vm.define "psql" do |psql|
-    psql.vm.box = "debian/contrib-jessie64"
-    psql.vm.provision :ansible_local do |ansible|
-      ansible.install_mode = "pip"
-      ansible.version = "2.3.1.0"
-      ansible.playbook = "provision.yml"
-      # ansible.verbose = "-vvvv"
-      ansible.extra_vars = {
-        :backend => "psql",
         :debug => DEBUG
       }
     end
